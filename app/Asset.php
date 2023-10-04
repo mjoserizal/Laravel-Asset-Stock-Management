@@ -39,4 +39,9 @@ class Asset extends Model
     {
         return $this->belongsTo(JenisObat::class, 'id_jenis_obat', 'id');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'asset_id');
+    }
 }
