@@ -11,9 +11,11 @@ class CreateAssetsTable extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->timestamp('expired_at')->nullable();
             $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
         });
 
     }

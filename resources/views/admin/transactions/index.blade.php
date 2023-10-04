@@ -2,7 +2,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.transaction.title_singular') }} {{ trans('global.list') }}
+        Transaksi
     </div>
 
     <div class="card-body">
@@ -11,16 +11,16 @@
                 <thead>
                     <tr>
                         <th>
-                            Created at
+                            Waktu
                         </th>
                         <th>
-                            {{ trans('cruds.transaction.fields.asset') }}
+                            Nama Obat
                         </th>
                         <th>
                             {{ trans('cruds.transaction.fields.user') }}
                         </th>
                         <th>
-                            {{ trans('cruds.transaction.fields.stock') }}
+                            Stok
                         </th>
                     </tr>
                 </thead>

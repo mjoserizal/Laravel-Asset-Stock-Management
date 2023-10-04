@@ -13,7 +13,7 @@ class TeamsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $randomNumber = rand(123, 789);
 
             $team = Team::factory()->create([

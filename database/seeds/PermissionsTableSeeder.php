@@ -156,6 +156,22 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '37',
                 'title' => 'profile_password_edit',
             ],
+            [
+                'id'    => '38',
+                'title' => 'jenisobat_access',
+            ],
+            [
+                'id'    => '39',
+                'title' => 'jenisobat_show',
+            ],
+            [
+                'id'    => '40',
+                'title' => 'jenisobat_delete',
+            ],
+            [
+                'id'    => '41',
+                'title' => 'jenisobat_create',
+            ],
         ];
 
         Permission::insert($permissions);

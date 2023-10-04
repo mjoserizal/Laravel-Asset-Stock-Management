@@ -4,6 +4,9 @@
         <ul class="nav">
             @can('user_management_access')
                 <li class="nav-item nav-dropdown">
+                    <a class="nav-link " href="#">
+                        Superadmin
+                    </a>
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-users nav-icon">
 
@@ -60,30 +63,42 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.asset.title') }}
+                        Obat
                     </a>
                 </li>
             @endcan
+
             @can('stock_access')
                 <li class="nav-item">
                     <a href="{{ route("admin.stocks.index") }}" class="nav-link {{ request()->is('admin/stocks') || request()->is('admin/stocks/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.stock.title') }}
+                        Stok Obat
                     </a>
                 </li>
             @endcan
+
             @can('transaction_access')
                 <li class="nav-item">
                     <a href="{{ route("admin.transactions.index") }}" class="nav-link {{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.transaction.title') }}
+                        Transaksi
                     </a>
                 </li>
             @endcan
+                @can('jenisobat_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.jenisobats.index") }}" class="nav-link {{ request()->is('admin/jenisobat') || request()->is('admin/jenisobat/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-cogs nav-icon">
+
+                            </i>
+                            Jenis Obat
+                        </a>
+                    </li>
+                @endcan
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                 @can('profile_password_edit')
                     <li class="nav-item">

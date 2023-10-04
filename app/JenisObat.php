@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-class Asset extends Model
+class JenisObat extends Model
 {
     use SoftDeletes, HasFactory;
 
-    public $table = 'assets';
+    public $table = 'jenis_obat';
 
     protected $dates = [
         'created_at',
@@ -21,12 +21,9 @@ class Asset extends Model
 
     protected $fillable = [
         'name',
-        'id_jenis_obat',
-        'expired_at',
         'created_at',
         'updated_at',
         'deleted_at',
-        'description',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -34,9 +31,8 @@ class Asset extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-
-    public function jenisObat()
-    {
-        return $this->belongsTo(JenisObat::class, 'id_jenis_obat', 'id');
-    }
+//    public function assets()
+//    {
+//        return $this->hasMany(Asset::class, 'id_jenis_obat');
+//    }
 }

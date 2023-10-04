@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.asset.title_singular') }}
+        Tambah Obat
     </div>
 
     <div class="card-body">
@@ -30,14 +30,22 @@
                 <span class="help-block">{{ trans('cruds.asset.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="danger_level">Danger level</label>
-                <input class="form-control {{ $errors->has('danger_level') ? 'is-invalid' : '' }}" type="number" name="danger_level" id="danger_level" value="{{ old('danger_level', 0) }}" required>
-                @if($errors->has('danger_level'))
+                <label class="required" for="expired_at">Expired At:</label>
+                <input type="date" class="form-control" id="expired_at" name="expired_at" value="{{ old('expired_at', now()->format('Y-m-d')) }}">
+            </div>
+            <div class="form-group">
+                <label for="id_jenis_obat">Jenis Obat</label>
+                <select class="form-control select2 {{ $errors->has('id_jenis_obat') ? 'is-invalid' : '' }}" name="id_jenis_obat" id="id_jenis_obat">
+                    @foreach($jenisobat as $id => $jenisobat)
+                        <option value="{{ $id }}" {{ old('id_jenis_obat') == $id ? 'selected' : '' }}>{{ $jenisobat }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('team'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('danger_level') }}
+                        {{ $errors->first('team') }}
                     </div>
                 @endif
-                <span class="help-block"></span>
+                <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
