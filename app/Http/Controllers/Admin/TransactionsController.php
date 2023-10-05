@@ -139,9 +139,9 @@ class TransactionsController extends Controller
      */
     public function storeStock(Stock $stock)
     {
-        $action      = request()->input('action', 'add') == 'add' ? 'add' : 'remove';
+        $action = request()->input('action', 'add') == 'add' ? 'add' : 'remove';
         $stockAmount = request()->input('stock', 1);
-        $sign        = $action == 'add' ? '+' : '-';
+        $sign = $action == 'add' ? '+' : '-';
 
         if ($stockAmount < 1) {
             return redirect()->route('admin.stocks.index')->with([
@@ -150,10 +150,10 @@ class TransactionsController extends Controller
         }
 
         Transaction::create([
-            'stock'    => $sign . $stockAmount,
+            'stock' => $sign . $stockAmount,
             'asset_id' => $stock->asset->id,
-            'team_id'  => $stock->team->id,
-            'user_id'  => auth()->user()->id,
+            'team_id' => $stock->team->id,
+            'user_id' => auth()->user()->id,
         ]);
 
         if ($action == 'add') {
@@ -176,4 +176,27 @@ class TransactionsController extends Controller
             'status' => $status,
         ]);
     }
+
+    public function statusTransaction(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return redirect()->route('admin.transactions.index');
+        }
+
+        $newStatus = $transaction->is_transaction == 1 ? 0 : 1;
+
+        $updateTransaction = $transaction->update([
+            'is_transaction' => $newStatus
+        ]);
+
+        if ($updateTransaction) {
+            return redirect()->route('admin.transactions.index');
+        } else {
+            return redirect()->route('admin.transactions.index');
+        }
+    }
+
+
 }

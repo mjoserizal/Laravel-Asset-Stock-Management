@@ -96,6 +96,7 @@
                                 </td>
                             @endcan
                             @can('stock_delete')
+                                @admin
                                 <td>
                                     <form action="{{ route('admin.transactions.storeStock', $stock->id) }}"
                                           method="POST" style="display: inline-block;" class="form-inline">
@@ -106,6 +107,19 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="REMOVE">
                                     </form>
                                 </td>
+                                @endadmin
+                                @user
+                                <td>
+                                    <form action="{{ route('admin.transactions.storeStock', $stock->id) }}"
+                                          method="POST" style="display: inline-block;" class="form-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="action" value="remove">
+                                        <input type="number" name="stock" class="form-control form-control-sm col-4"
+                                               min="1">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="PESAN">
+                                    </form>
+                                </td>
+                                @enduser
                             @endcan
                             <td>
                                 @can('stock_show')
