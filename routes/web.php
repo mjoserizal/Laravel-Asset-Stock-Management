@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
+
 Route::redirect('/', '/login');
+Route::view('/register', 'register')->name('register.form');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
+
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));

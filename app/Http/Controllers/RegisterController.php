@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -17,6 +14,7 @@ class RegisterController extends Controller
     {
         // Validasi input pengguna (email, password, dll.)
         $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             // tambahkan validasi lainnya di sini sesuai kebutuhan
@@ -24,14 +22,16 @@ class RegisterController extends Controller
 
         // Membuat pengguna baru
         $user = User::create([
+            'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
+            'team_id' => 1,
             // tambahkan kolom lainnya sesuai kebutuhan
         ]);
 
-        // Menetapkan peran default ke pengguna baru
+        // Menetapkan peran default (ID 2) kepada pengguna baru
         $user->roles()->attach(2); // 2 adalah ID dari peran 'user'
-
+        return redirect('/');
         // Lanjutkan dengan logika redirect atau respons setelah registrasi
     }
 
