@@ -20,8 +20,7 @@ class UpdateAssetRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'required',
-            'danger_level' => 'required|integer',
+            'name' => 'required',
         ];
 
     }

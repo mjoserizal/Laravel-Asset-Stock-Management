@@ -38,6 +38,7 @@
                         <th>
                             Jenis Obat
                         </th>
+                        <th>Barcode</th>
                         <th>
                             &nbsp;
                         </th>
@@ -61,7 +62,23 @@
                             <td>
                                 {{ $asset->description ?? '' }}</td>
                             <td>
-                            {{ $asset->jenisObat->name }}
+                                {{ $asset->jenisObat->name }}</td>
+                            <td>
+                                    <?php
+                                    // Mendapatkan nama aset
+                                    $namaAset = $asset->name;
+
+                                    // Membatasi panjang nama aset menjadi 10 karakter
+                                    $namaAsetTerbatas = substr($namaAset, 0, 10);
+
+                                    // Memastikan panjang konten barcode tetap 10 karakter dengan padding '0' di depan jika kurang dari 10 karakter
+                                    $kontenBarcode = str_pad($namaAsetTerbatas, 10, STR_PAD_LEFT);
+
+                                    // Membuat barcode dengan rasio persegi
+                                    echo \Milon\Barcode\DNS1D::getBarcodeHTML($kontenBarcode, 'C39', true);
+                                    ?>
+                            </td>
+
                             <td>
 
                                 @can('asset_show')
