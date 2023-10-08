@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Asset;
+use App\JenisObat;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyAssetRequest;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
-use App\JenisObat;
-use Gate;
-use Illuminate\Http\Request;
+use App\Http\Requests\MassDestroyAssetRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class AssetsController extends Controller

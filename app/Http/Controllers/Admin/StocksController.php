@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Asset;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyStockRequest;
-use App\Http\Requests\StoreStockRequest;
-use App\Http\Requests\UpdateStockRequest;
 use App\Stock;
-use Gate;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreStockRequest;
+// use Gate;
+use App\Http\Requests\UpdateStockRequest;
+use App\Http\Requests\MassDestroyStockRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class StocksController extends Controller
