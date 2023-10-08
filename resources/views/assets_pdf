@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Aset</title>
+    <style>
+        /* Gaya CSS khusus untuk PDF */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Aset</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Expired</th>
+                <th>Deskripsi</th>
+                <th>Jenis Obat</th>
+                <th>Barcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($assets as $asset)
+                <tr>
+                    <td>{{ $asset->id }}</td>
+                    <td>{{ $asset->name }}</td>
+                    <td>{{ $asset->expired_at ? \Carbon\Carbon::parse($asset->expired_at)->format('D-M-Y') : 'N/A' }}</td>
+                    <td>{{ $asset->description }}</td>
+                    <td>{{ $asset->jenisObat->name }}</td>
+                    <td>
+                        <?php
+                        $namaAset = $asset->name;
+                        $namaAsetTerbatas = substr($namaAset, 0, 10);
+                        $kontenBarcode = str_pad($namaAsetTerbatas, 10, STR_PAD_LEFT);
+                        echo \Milon\Barcode\DNS1D::getBarcodeHTML($kontenBarcode, 'C39', true);
+                        ?>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</body>
+</html>

@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Assets
     Route::delete('assets/destroy', 'AssetsController@massDestroy')->name('assets.massDestroy');
     Route::resource('assets', 'AssetsController');
+    Route::get('admin/assets/pdf', 'AssetsController@exportPdf')->name('admin.assets.exportPdf');
 
     // Teams
     Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');

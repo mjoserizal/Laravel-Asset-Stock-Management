@@ -17,37 +17,37 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class=" table table-bordered table-striped table-hover datatable datatable-Asset">
-                    <thead>
-                        <tr>
-                            <th width="10">
 
-                            </th>
-                            <th>
-                                {{ trans('cruds.asset.fields.id') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.asset.fields.name') }}
-                            </th>
-                            <th>
-                                Expired
-                            </th>
-                            <th>
-                                {{ trans('cruds.asset.fields.description') }}
-                            </th>
+                    <thead>
+                    <tr>
+                        <th width="10">
+
+                        </th>
+                        <th>
+                            {{ trans('cruds.asset.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.asset.fields.name') }}
+                        </th>
+                        <th>
+                            Expired
+                        </th>
+                        <th>
+                            {{ trans('cruds.asset.fields.description') }}
+                        </th>
 
                         <th>
                             Jenis Obat
                         </th>
-                        <th>Barcode</th>
                         <th>
                             &nbsp;
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($assets as $key => $asset)
-                            <tr data-entry-id="{{ $asset->id }}">
-                                <td>
+                    @foreach ($assets as $key => $asset)
+                        <tr data-entry-id="{{ $asset->id }}">
+                            <td>
 
                             </td>
                             <td>
@@ -63,100 +63,90 @@
                                 {{ $asset->description ?? '' }}</td>
                             <td>
                                 {{ $asset->jenisObat->name }}</td>
+
+
                             <td>
-                                    <?php
-                                    // Mendapatkan nama aset
-                                    $namaAset = $asset->name;
 
-                                    // Membatasi panjang nama aset menjadi 10 karakter
-                                    $namaAsetTerbatas = substr($namaAset, 0, 10);
+                                @can('asset_show')
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('admin.assets.show', $asset->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
 
-                                    // Memastikan panjang konten barcode tetap 10 karakter dengan padding '0' di depan jika kurang dari 10 karakter
-                                    $kontenBarcode = str_pad($namaAsetTerbatas, 10, STR_PAD_LEFT);
+                                @can('asset_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.assets.edit', $asset->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
 
-                                    // Membuat barcode dengan rasio persegi
-                                    echo \Milon\Barcode\DNS1D::getBarcodeHTML($kontenBarcode, 'C39', true);
-                                    ?>
+                                @can('asset_delete')
+                                    <form action="{{ route('admin.assets.destroy', $asset->id) }}" method="POST"
+                                          onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                          style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger"
+                                               value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
                             </td>
 
-                            <td>
-
-                                    @can('asset_show')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.assets.show', $asset->id) }}">
-                                            {{ trans('global.view') }}
-                                        </a>
-                                    @endcan
-
-                                    @can('asset_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.assets.edit', $asset->id) }}">
-                                            {{ trans('global.edit') }}
-                                        </a>
-                                    @endcan
-
-                                    @can('asset_delete')
-                                        <form action="{{ route('admin.assets.destroy', $asset->id) }}" method="POST"
-                                            onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                            style="display: inline-block;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="btn btn-xs btn-danger"
-                                                value="{{ trans('global.delete') }}">
-                                        </form>
-                                    @endcan
-
-                                </td>
-
-                            </tr>
-                        @endforeach
+                        </tr>
+                    @endforeach
                     </tbody>
+
                 </table>
             </div>
+            <a class="btn btn-primary" href="{{ route('admin.admin.assets.exportPdf') }}">
+                Export PDF Barcode
+            </a>
         </div>
     </div>
 @endsection
 @section('scripts')
     @parent
     <script>
-        $(function() {
+        $(function () {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
             @can('asset_delete')
-                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-                let deleteButton = {
-                    text: deleteButtonTrans,
-                    url: "{{ route('admin.assets.massDestroy') }}",
-                    className: 'btn-danger',
-                    action: function(e, dt, node, config) {
-                        var ids = $.map(dt.rows({
-                            selected: true
-                        }).nodes(), function(entry) {
-                            return $(entry).data('entry-id')
-                        });
+            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+            let deleteButton = {
+                text: deleteButtonTrans,
+                url: "{{ route('admin.assets.massDestroy') }}",
+                className: 'btn-danger',
+                action: function (e, dt, node, config) {
+                    var ids = $.map(dt.rows({
+                        selected: true
+                    }).nodes(), function (entry) {
+                        return $(entry).data('entry-id')
+                    });
 
-                        if (ids.length === 0) {
-                            alert('{{ trans('global.datatables.zero_selected') }}')
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
 
-                            return
-                        }
+                        return
+                    }
 
-                        if (confirm('{{ trans('global.areYouSure') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                            headers: {
+                                'x-csrf-token': _token
+                            },
+                            method: 'POST',
+                            url: config.url,
+                            data: {
+                                ids: ids,
+                                _method: 'DELETE'
+                            }
+                        })
+                            .done(function () {
+                                location.reload()
+                            })
                     }
                 }
-                dtButtons.push(deleteButton)
+            }
+            dtButtons.push(deleteButton)
             @endcan
 
             $.extend(true, $.fn.dataTable.defaults, {
@@ -168,7 +158,7 @@
             $('.datatable-Asset:not(.ajaxTable)').DataTable({
                 buttons: dtButtons
             })
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();
             });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use PDF;
+use Milon\Barcode\DNS1D;
 use App\Asset;
 use App\JenisObat;
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
 use App\Http\Requests\MassDestroyAssetRequest;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class AssetsController extends Controller
 {
@@ -82,4 +85,13 @@ class AssetsController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
 
     }
+
+    public function exportPdf()
+    {
+        $assets = Asset::all();
+
+        $pdf = PDF::loadView('assets_pdf', compact('assets'));
+        return $pdf->download('barcode-daftar-obat.pdf');
+    }
+
 }
