@@ -2,8 +2,12 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 
 Route::redirect('/', '/login');
+Route::view('/register', 'register')->name('register.form');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
+
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -48,6 +52,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //    Route::delete('transactions/destroy', 'TransactionsController@massDestroy')->name('transactions.massDestroy');
     Route::post('transactions/{stock}/storeStock', 'TransactionsController@storeStock')->name('transactions.storeStock');
     Route::resource('transactions', 'TransactionsController')->only(['index']);
+
+    Route::get('transactions/{id}/', 'TransactionsController@statusTransaction')->name('transactions.statusTransaction');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

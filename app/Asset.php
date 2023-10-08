@@ -44,4 +44,13 @@ class Asset extends Model
     {
         return $this->hasMany(Transaction::class, 'asset_id');
     }
+
+    // Asset.php
+
+    public function getBarcodeContentAttribute()
+    {
+        // Menggunakan nama aset sebagai konten barcode, Anda bisa sesuaikan dengan kebutuhan Anda
+        return $this->attributes['name'];
+    }
+
 }

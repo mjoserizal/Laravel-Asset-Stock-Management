@@ -24,6 +24,7 @@ class Transaction extends Model
         'team_id',
         'user_id',
         'asset_id',
+        'is_transaction',
         'created_at',
         'updated_at',
         'deleted_at',

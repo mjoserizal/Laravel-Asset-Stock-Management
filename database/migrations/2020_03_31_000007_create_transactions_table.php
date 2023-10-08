@@ -11,6 +11,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('stock');
+            $table->boolean('is_transaction')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

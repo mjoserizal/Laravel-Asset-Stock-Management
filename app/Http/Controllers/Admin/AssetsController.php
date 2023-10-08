@@ -31,17 +31,23 @@ class AssetsController extends Controller
 
     public function store(StoreAssetRequest $request)
     {
+
         $asset = Asset::create($request->all());
 
         return redirect()->route('admin.assets.index');
 
     }
 
+    public function assetsCodeExists($number)
+    {
+        return Asset::whereAssetsCode($number)->exists();
+    }
+
     public function edit(Asset $asset)
     {
-        abort_if(Gate::denies('asset_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.assets.edit', compact('asset'));
+        $jenisobat = JenisObat::all()->pluck('name', 'id');
+        return view('admin.assets.edit', compact('asset', 'jenisobat'));
     }
 
     public function update(UpdateAssetRequest $request, Asset $asset)

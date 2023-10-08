@@ -35,34 +35,51 @@
                                 {{ trans('cruds.asset.fields.description') }}
                             </th>
 
-                            <th>
-                                Jenis Obat
-                            </th>
-                            <th>
-                                &nbsp;
-                            </th>
-                        </tr>
+                        <th>
+                            Jenis Obat
+                        </th>
+                        <th>Barcode</th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
                         @foreach ($assets as $key => $asset)
                             <tr data-entry-id="{{ $asset->id }}">
                                 <td>
 
-                                </td>
-                                <td>
-                                    {{ $asset->id ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $asset->name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $asset->expired_at ? \Carbon\Carbon::parse($asset->expired_at)->format('D, d M Y') : 'N/A' }}
-                                </td>
-                                <td>
-                                    {{ $asset->description ?? '' }}</td>
-                                <td>
-                                    {{ $asset->jenisObat->name }}
-                                <td>
+                            </td>
+                            <td>
+                                {{ $asset->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $asset->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $asset->expired_at ? \Carbon\Carbon::parse($asset->expired_at)->format('D-M-Y') : 'N/A' }}
+                            </td>
+                            <td>
+                                {{ $asset->description ?? '' }}</td>
+                            <td>
+                                {{ $asset->jenisObat->name }}</td>
+                            <td>
+                                    <?php
+                                    // Mendapatkan nama aset
+                                    $namaAset = $asset->name;
+
+                                    // Membatasi panjang nama aset menjadi 10 karakter
+                                    $namaAsetTerbatas = substr($namaAset, 0, 10);
+
+                                    // Memastikan panjang konten barcode tetap 10 karakter dengan padding '0' di depan jika kurang dari 10 karakter
+                                    $kontenBarcode = str_pad($namaAsetTerbatas, 10, STR_PAD_LEFT);
+
+                                    // Membuat barcode dengan rasio persegi
+                                    echo \Milon\Barcode\DNS1D::getBarcodeHTML($kontenBarcode, 'C39', true);
+                                    ?>
+                            </td>
+
+                            <td>
 
                                     @can('asset_show')
                                         <a class="btn btn-xs btn-primary" href="{{ route('admin.assets.show', $asset->id) }}">
