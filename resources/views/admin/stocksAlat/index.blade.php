@@ -27,7 +27,7 @@
                     <thead>
                     <tr>
                         <th>
-                            Disposable
+                            Alat
                         </th>
                         @admin
                         <th>
@@ -65,7 +65,7 @@
                     @foreach($stocks as $key => $stock)
                         <tr>
                             <td>
-                                {{ $stock->disposable->name ?? '' }}
+                                {{ $stock->alat->name ?? '' }}
                             </td>
                             @admin
                             <td>
@@ -78,7 +78,7 @@
                             @can('stock_create')
                                 <td>
                                     <form
-                                        action="{{ route('admin.transactionsDisposable.storeStockDisposable', $stock->id) }}"
+                                        action="{{ route('admin.transactionsAlat.storeStockAlat', $stock->id) }}"
                                         method="POST" style="display: inline-block;" class="form-inline">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="action" value="add">
@@ -91,7 +91,7 @@
                             @can('stock_delete')
                                 <td>
                                     <form
-                                        action="{{ route('admin.transactionsDisposable.storeStockDisposable', $stock->id) }}"
+                                        action="{{ route('admin.transactionsAlat.storeStockAlat', $stock->id) }}"
                                         method="POST" style="display: inline-block;" class="form-inline">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="action" value="remove">

@@ -17,6 +17,10 @@ class AddRelationshipFieldsToStocksTable extends Migration
             $table->foreign('disposable_id')
                 ->references('id')->on('disposables')
                 ->onDelete('cascade'); // Tindakan kaskade
+            $table->unsignedInteger('alat_id')->nullable();
+            $table->foreign('alat_id')
+                ->references('id')->on('alats')
+                ->onDelete('cascade'); // Tindakan kaskade
             $table->unsignedInteger('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_1230970')->references('id')->on('teams');
         });

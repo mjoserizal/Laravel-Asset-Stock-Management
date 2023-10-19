@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Alat;
 use App\User;
 use App\Asset;
 use App\Stock;
@@ -23,7 +24,7 @@ use App\Http\Requests\MassDestroyTransactionRequest;
  * Class TransactionsController
  * @package App\Http\Controllers\Admin
  */
-class TransactionsController extends Controller
+class TransactionsAlatController extends Controller
 {
     /**
      * @return Factory|View
@@ -32,9 +33,9 @@ class TransactionsController extends Controller
     {
         abort_if(Gate::denies('transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $transactions = Transaction::whereNotNull('asset_id')->get();
+        $transactions = Transaction::whereNotNull('alat_id')->get();
 
-        return view('admin.transactions.index', compact('transactions'));
+        return view('admin.transactionsAlat.index', compact('transactions'));
     }
 
     /**
@@ -44,11 +45,11 @@ class TransactionsController extends Controller
     {
         abort_if(Gate::denies('transaction_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assets = Asset::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $alat = Alat::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.transactions.create', compact('assets', 'users'));
+        return view('admin.transactions.create', compact('alat', 'users'));
     }
 
     /**
@@ -59,7 +60,7 @@ class TransactionsController extends Controller
     {
         $transaction = Transaction::create($request->all());
 
-        return redirect()->route('admin.transactions.index');
+        return redirect()->route('admin.transactionsAlat.index');
 
     }
 
@@ -133,7 +134,7 @@ class TransactionsController extends Controller
 
     }
 
-    public function storeStockDisposable(Stock $stock)
+    public function storeStockAlat(Stock $stock)
     {
         $action = request()->input('action', 'add') == 'add' ? 'add' : 'remove';
         $stockAmount = request()->input('stock', 1);
@@ -147,7 +148,7 @@ class TransactionsController extends Controller
 
         Transaction::create([
             'stock' => $sign . $stockAmount,
-            'disposable_id' => $stock->disposable->id,
+            'alat_id' => $stock->alat->id,
             'team_id' => $stock->team->id,
             'user_id' => auth()->user()->id,
         ]);
@@ -168,71 +169,8 @@ class TransactionsController extends Controller
             $status = $stockAmount . ' item(-s) was removed from stock.';
         }
 
-        return redirect()->route('admin.stocks.index')->with([
+        return redirect()->route('admin.stocksAlat.index')->with([
             'status' => $status,
         ]);
-    }
-
-    public function statusTransaction(Request $request, $id)
-    {
-        $transaction = Transaction::find($id);
-
-        if (!$transaction) {
-            return redirect()->route('admin.transactions.index');
-        }
-
-        $newStatus = $transaction->is_transaction == 1 ? 0 : 1;
-
-        $updateTransaction = $transaction->update([
-            'is_transaction' => $newStatus
-        ]);
-
-        if ($updateTransaction) {
-            return redirect()->route('admin.transactions.index');
-        } else {
-            return redirect()->route('admin.transactions.index');
-        }
-    }
-
-    public function transDisStatus(Request $request, $id)
-    {
-        $transaction = Transaction::find($id);
-
-        if (!$transaction) {
-            return redirect()->route('admin.transactionsDisposable.index');
-        }
-
-        $newStatus = $transaction->is_transaction == 1 ? 0 : 1;
-
-        $updateTransaction = $transaction->update([
-            'is_transaction' => $newStatus
-        ]);
-
-        if ($updateTransaction) {
-            return redirect()->route('admin.transactionsDisposable.index');
-        } else {
-            return redirect()->route('admin.transactionsDisposable.index');
-        }
-    }
-
-    public function transAlStatus(Request $request, $id)
-    {
-        $transaction = Transaction::find($id);
-
-        if (!$transaction) {
-            return redirect()->route('admin.transactionsDisposable.index');
-        }
-
-        $newStatus = $transaction->is_transaction == 1 ? 0 : 1;
-
-        $updateTransaction = $transaction->update([
-            'is_transaction' => $newStatus
-        ]);
-
-        if ($updateTransaction) {
-            return redirect()->route('admin.transactionsAlat.index');
-        } else {
-            return redirect()->route('admin.transactionsAlat.index');
-        }
     }
 }

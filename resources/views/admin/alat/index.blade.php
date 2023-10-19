@@ -3,15 +3,15 @@
     @can('disposable_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route('admin.disposable.create') }}">
-                    Tambah Disposable
+                <a class="btn btn-success" href="{{ route('admin.alat.create') }}">
+                    Tambah Alat
                 </a>
             </div>
         </div>
     @endcan
     <div class="card">
         <div class="card-header">
-            List Disposable
+            List Alat
         </div>
 
         <div class="card-body">
@@ -30,7 +30,7 @@
                             {{ trans('cruds.asset.fields.name') }}
                         </th>
                         <th>
-                            Expired
+                            Keterangan
                         </th>
                         <th>
                             {{ trans('cruds.asset.fields.description') }}
@@ -42,42 +42,42 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($disposable as $key => $disposable)
-                        <tr data-entry-id="{{ $disposable->id }}">
+                    @foreach ($alat as $key => $alat)
+                        <tr data-entry-id="{{ $alat->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $disposable->id ?? '' }}
+                                {{ $alat->id ?? '' }}
                             </td>
                             <td>
-                                {{ $disposable->name ?? '' }}
+                                {{ $alat->name ?? '' }}
                             </td>
                             <td>
-                                {{ $disposable->expired_at ? \Carbon\Carbon::parse($disposable->expired_at)->format('D-M-Y') : 'N/A' }}
+                                {{ $alat->keterangan ?? '' }}
                             </td>
                             <td>
-                                {{ $disposable->description ?? '' }}</td>
+                                {{ $alat->description ?? '' }}</td>
 
 
                             <td>
 
                                 @can('disposable_show')
                                     <a class="btn btn-xs btn-primary"
-                                       href="{{ route('admin.disposable.show', $disposable->id) }}">
+                                       href="{{ route('admin.alat.show', $alat->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('disposable_edit')
                                     <a class="btn btn-xs btn-info"
-                                       href="{{ route('admin.disposable.edit', $disposable->id) }}">
+                                       href="{{ route('admin.alat.edit', $alat->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('disposable_delete')
-                                    <form action="{{ route('admin.disposable.destroy', $disposable->id) }}"
+                                    <form action="{{ route('admin.alat.destroy', $alat->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
                                           style="display: inline-block;">

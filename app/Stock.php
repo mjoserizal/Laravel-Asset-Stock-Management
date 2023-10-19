@@ -24,6 +24,7 @@ class Stock extends Model
         'team_id',
         'asset_id',
         'disposable_id',
+        'alat_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -45,6 +46,12 @@ class Stock extends Model
     public function disposable()
     {
         return $this->belongsTo(Disposable::class, 'disposable_id');
+
+    }
+
+    public function alat()
+    {
+        return $this->belongsTo(Alat::class, 'alat_id');
 
     }
 

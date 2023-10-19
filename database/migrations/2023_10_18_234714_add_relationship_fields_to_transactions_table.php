@@ -19,6 +19,10 @@ class AddRelationshipFieldsToTransactionsTable extends Migration
             $table->foreign('disposable_id')
                 ->references('id')->on('disposables')
                 ->onDelete('cascade'); // Tindakan kaskade
+            $table->unsignedInteger('alat_id')->nullable();
+            $table->foreign('alat_id')
+                ->references('id')->on('alats')
+                ->onDelete('cascade'); // Tindakan kaskade
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });

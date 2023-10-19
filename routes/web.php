@@ -38,8 +38,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('assets', 'AssetsController');
     //Disposable
     Route::resource('disposable', 'DisposableController');
+    Route::resource('alat', 'AlatController');
+    //alat
     Route::resource('stocksDisposable', 'StockDisposableController');
+    Route::resource('stocksAlat', 'StockAlatController');
+
+
     Route::resource('transactionsDisposable', 'TransactionsDisposableController');
+    Route::resource('transactionsAlat', 'TransactionsAlatController');
+    Route::post('transactions/{stock}/storeStockAlat', 'TransactionsAlatController@storeStockAlat')->name('transactionsAlat.storeStockAlat');
     Route::post('transactions/{stock}/storeStockDisposable', 'TransactionsDisposableController@storeStockDisposable')->name('transactionsDisposable.storeStockDisposable');
     //pdf
     Route::get('admin/assets/pdf', 'AssetsController@exportPdf')->name('admin.assets.exportPdf');
@@ -62,8 +69,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('transactions', 'TransactionsController')->only(['index']);
 
     Route::get('transactions/{id}/', 'TransactionsController@statusTransaction')->name('transactions.statusTransaction');
-
     Route::get('transactionsDis/{id}/', 'TransactionsController@transDisStatus')->name('transactions.transDisStatus');
+    Route::get('transactionsAl/{id}/', 'TransactionsController@transAlStatus')->name('transactions.transAlStatus');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

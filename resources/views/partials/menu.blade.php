@@ -61,52 +61,79 @@
                     </ul>
                 </li>
             @endcan
-            @can('asset_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.assets.index") }}"
-                       class="nav-link {{ request()->is('admin/assets') || request()->is('admin/assets/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+            @can('disposable_access')
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+                        <i class="fa-fw fas fa-capsules nav-icon">
 
                         </i>
-                        Obat
+                        Obat-obatan
                     </a>
+                    <ul class="nav-dropdown-items">
+                        @can('stock_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.stocks.index") }}"
+                                   class="nav-link {{ request()->is('admin/stocks') || request()->is('admin/stocks/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-cogs nav-icon">
+
+                                    </i>
+                                    Stok Obat
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('transaction_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.transactions.index") }}"
+                                   class="nav-link {{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-cogs nav-icon">
+
+                                    </i>
+                                    Transaksi Obat
+                                </a>
+                            </li>
+                        @endcan
+                        @can('jenisobat_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.jenisobats.index") }}"
+                                   class="nav-link {{ request()->is('admin/jenisobat') || request()->is('admin/jenisobat/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-cogs nav-icon">
+
+                                    </i>
+                                    Jenis Obat
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </li>
             @endcan
+            <li class="nav-item">
+                <a href="{{ route("admin.alat.index") }}"
+                   class="nav-link {{ request()->is('admin/alat') || request()->is('admin/alat/*') ? 'active' : '' }}">
+                    <i class="fa-fw fas fa-cogs nav-icon">
 
-            @can('stock_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.stocks.index") }}"
-                       class="nav-link {{ request()->is('admin/stocks') || request()->is('admin/stocks/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                    </i>
+                    Alat
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route("admin.stocksAlat.index") }}"
+                   class="nav-link {{ request()->is('admin/stockAlat') || request()->is('admin/stockAlat/*') ? 'active' : '' }}">
+                    <i class="fa-fw fas fa-cogs nav-icon">
 
-                        </i>
-                        Stok Obat
-                    </a>
-                </li>
-            @endcan
+                    </i>
+                    Stok Alat
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route("admin.transactionsAlat.index") }}"
+                   class="nav-link {{ request()->is('admin/transactionsAlat') || request()->is('admin/transactionsAlat/*') ? 'active' : '' }}">
+                    <i class="fa-fw fas fa-money nav-icon">
 
-            @can('transaction_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.transactions.index") }}"
-                       class="nav-link {{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-cogs nav-icon">
-
-                        </i>
-                        Transaksi
-                    </a>
-                </li>
-            @endcan
-            @can('jenisobat_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.jenisobats.index") }}"
-                       class="nav-link {{ request()->is('admin/jenisobat') || request()->is('admin/jenisobat/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-cogs nav-icon">
-
-                        </i>
-                        Jenis Obat
-                    </a>
-                </li>
-            @endcan
+                    </i>
+                    Transaksi Alat
+                </a>
+            </li>
             @can('disposable_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
