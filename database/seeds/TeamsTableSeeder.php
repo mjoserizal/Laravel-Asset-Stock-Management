@@ -16,7 +16,7 @@ class TeamsTableSeeder extends Seeder
 
         $users = [
             [
-                'name' => 'Apotek UNS',
+                'name' => 'ADARO ENERGY',
             ],
         ];
         Team::insert($users);

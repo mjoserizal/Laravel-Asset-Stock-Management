@@ -14,7 +14,7 @@
                             Waktu
                         </th>
                         <th>
-                            Nama Obat
+                            Nama Disposable
                         </th>
                         <th>
                             {{ trans('cruds.transaction.fields.user') }}
@@ -34,7 +34,7 @@
                                 {{ $transaction->created_at}}
                             </td>
                             <td>
-                                {{ $transaction->asset->name ?? '' }}
+                                {{ $transaction->disposable->name ?? '' }}
                             </td>
                             <td>
                                 {{ $transaction->user->name ?? '' }}

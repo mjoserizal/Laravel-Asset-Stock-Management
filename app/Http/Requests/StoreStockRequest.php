@@ -29,7 +29,7 @@ class StoreStockRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'asset_id'      => [
+            'asset_id' => [
                 'required',
                 'integer',
                 Rule::unique('stocks')

@@ -26,7 +26,7 @@ class AssetsTableSeeder extends Seeder
 
         foreach ($assets as $asset) {
             Asset::factory()->create([
-                'name'        => $asset,
+                'name' => $asset,
                 'description' => $asset,
                 'id_jenis_obat' => 1,
             ]);

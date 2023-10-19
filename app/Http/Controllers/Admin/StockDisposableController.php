@@ -14,15 +14,14 @@ use App\Http\Requests\UpdateStockRequest;
 use App\Http\Requests\MassDestroyStockRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class StocksController extends Controller
+class StockDisposableController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('stock_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $stocks = Stock::whereNotNull('asset_id')->get();
+        $stocks = Stock::whereNotNull('disposable_id')->get();
 
-        return view('admin.stocks.index', compact('stocks'));
+        return view('admin.stocksDisposable.index', compact('stocks'));
     }
 
     public function create()

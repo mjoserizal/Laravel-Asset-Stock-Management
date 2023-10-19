@@ -36,6 +36,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Assets
     Route::delete('assets/destroy', 'AssetsController@massDestroy')->name('assets.massDestroy');
     Route::resource('assets', 'AssetsController');
+    //Disposable
+    Route::resource('disposable', 'DisposableController');
+    Route::resource('stocksDisposable', 'StockDisposableController');
+    Route::resource('transactionsDisposable', 'TransactionsDisposableController');
+    Route::post('transactions/{stock}/storeStockDisposable', 'TransactionsDisposableController@storeStockDisposable')->name('transactionsDisposable.storeStockDisposable');
+    //pdf
     Route::get('admin/assets/pdf', 'AssetsController@exportPdf')->name('admin.assets.exportPdf');
 
     // Teams

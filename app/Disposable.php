@@ -2,17 +2,16 @@
 
 namespace App;
 
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-class Stock extends Model
+class Disposable extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use SoftDeletes, HasFactory;
 
-    public $table = 'stocks';
+    public $table = 'disposables';
 
     protected $dates = [
         'created_at',
@@ -21,36 +20,31 @@ class Stock extends Model
     ];
 
     protected $fillable = [
-        'team_id',
-        'asset_id',
-        'disposable_id',
+        'name',
+        'expired_at',
         'created_at',
         'updated_at',
         'deleted_at',
-        'current_stock',
+        'description',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-
     }
 
-    public function asset()
+
+    public function transactions()
     {
-        return $this->belongsTo(Asset::class, 'asset_id');
-
+        return $this->hasMany(Transaction::class, 'disposable_id');
     }
 
-    public function disposable()
+    // Asset.php
+
+    public function getBarcodeContentAttribute()
     {
-        return $this->belongsTo(Disposable::class, 'disposable_id');
-
+        // Menggunakan nama aset sebagai konten barcode, Anda bisa sesuaikan dengan kebutuhan Anda
+        return $this->attributes['name'];
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-
-    }
 }

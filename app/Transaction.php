@@ -24,6 +24,7 @@ class Transaction extends Model
         'team_id',
         'user_id',
         'asset_id',
+        'disposable_id',
         'is_transaction',
         'created_at',
         'updated_at',
@@ -39,6 +40,12 @@ class Transaction extends Model
     public function asset()
     {
         return $this->belongsTo(Asset::class, 'asset_id');
+
+    }
+
+    public function disposable()
+    {
+        return $this->belongsTo(Disposable::class, 'disposable_id');
 
     }
 

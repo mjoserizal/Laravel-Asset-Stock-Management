@@ -23,7 +23,7 @@ use App\Http\Requests\MassDestroyTransactionRequest;
  * Class TransactionsController
  * @package App\Http\Controllers\Admin
  */
-class TransactionsController extends Controller
+class TransactionsDisposableController extends Controller
 {
     /**
      * @return Factory|View
@@ -32,9 +32,9 @@ class TransactionsController extends Controller
     {
         abort_if(Gate::denies('transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $transactions = Transaction::whereNotNull('asset_id')->get();
+        $transactions = Transaction::whereNotNull('disposable_id')->get();
 
-        return view('admin.transactions.index', compact('transactions'));
+        return view('admin.transactionsDisposable.index', compact('transactions'));
     }
 
     /**
@@ -212,7 +212,7 @@ class TransactionsController extends Controller
             $status = $stockAmount . ' item(-s) was removed from stock.';
         }
 
-        return redirect()->route('admin.stocks.index')->with([
+        return redirect()->route('admin.stocksDisposable.index')->with([
             'status' => $status,
         ]);
     }

@@ -16,7 +16,8 @@
                     <ul class="nav-dropdown-items">
                         @can('permission_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.permissions.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.permissions.index") }}"
+                                   class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-unlock-alt nav-icon">
 
                                     </i>
@@ -26,7 +27,8 @@
                         @endcan
                         @can('role_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.roles.index") }}"
+                                   class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-briefcase nav-icon">
 
                                     </i>
@@ -36,7 +38,8 @@
                         @endcan
                         @can('user_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.users.index") }}"
+                                   class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-user nav-icon">
 
                                     </i>
@@ -46,7 +49,8 @@
                         @endcan
                         @can('team_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.teams.index") }}" class="nav-link {{ request()->is('admin/teams') || request()->is('admin/teams/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.teams.index") }}"
+                                   class="nav-link {{ request()->is('admin/teams') || request()->is('admin/teams/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-users nav-icon">
 
                                     </i>
@@ -59,7 +63,8 @@
             @endcan
             @can('asset_access')
                 <li class="nav-item">
-                    <a href="{{ route("admin.assets.index") }}" class="nav-link {{ request()->is('admin/assets') || request()->is('admin/assets/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.assets.index") }}"
+                       class="nav-link {{ request()->is('admin/assets') || request()->is('admin/assets/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
@@ -70,7 +75,8 @@
 
             @can('stock_access')
                 <li class="nav-item">
-                    <a href="{{ route("admin.stocks.index") }}" class="nav-link {{ request()->is('admin/stocks') || request()->is('admin/stocks/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.stocks.index") }}"
+                       class="nav-link {{ request()->is('admin/stocks') || request()->is('admin/stocks/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
@@ -81,7 +87,8 @@
 
             @can('transaction_access')
                 <li class="nav-item">
-                    <a href="{{ route("admin.transactions.index") }}" class="nav-link {{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.transactions.index") }}"
+                       class="nav-link {{ request()->is('admin/transactions') || request()->is('admin/transactions/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
@@ -89,20 +96,49 @@
                     </a>
                 </li>
             @endcan
-                @can('jenisobat_access')
-                    <li class="nav-item">
-                        <a href="{{ route("admin.jenisobats.index") }}" class="nav-link {{ request()->is('admin/jenisobat') || request()->is('admin/jenisobat/*') ? 'active' : '' }}">
-                            <i class="fa-fw fas fa-cogs nav-icon">
+            @can('jenisobat_access')
+                <li class="nav-item">
+                    <a href="{{ route("admin.jenisobats.index") }}"
+                       class="nav-link {{ request()->is('admin/jenisobat') || request()->is('admin/jenisobat/*') ? 'active' : '' }}">
+                        <i class="fa-fw fas fa-cogs nav-icon">
 
-                            </i>
-                            Jenis Obat
-                        </a>
-                    </li>
-                @endcan
+                        </i>
+                        Jenis Obat
+                    </a>
+                </li>
+            @endcan
+            <li class="nav-item">
+                <a href="{{ route("admin.disposable.index") }}"
+                   class="nav-link {{ request()->is('admin/disposable') || request()->is('admin/disposable/*') ? 'active' : '' }}">
+                    <i class="fa-fw fas fa-cogs nav-icon">
+
+                    </i>
+                    Disposable
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route("admin.stocksDisposable.index") }}"
+                   class="nav-link {{ request()->is('admin/stockDisposable') || request()->is('admin/stockDisposable/*') ? 'active' : '' }}">
+                    <i class="fa-fw fas fa-cogs nav-icon">
+
+                    </i>
+                    Stok Disposable
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route("admin.transactionsDisposable.index") }}"
+                   class="nav-link {{ request()->is('admin/transactionsDisposable') || request()->is('admin/transactionsDisposable/*') ? 'active' : '' }}">
+                    <i class="fa-fw fas fa-cogs nav-icon">
+
+                    </i>
+                    Transaksi Disposable
+                </a>
+            </li>
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                 @can('profile_password_edit')
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
+                        <a class="nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}"
+                           href="{{ route('profile.password.edit') }}">
                             <i class="fa-fw fas fa-key nav-icon">
                             </i>
                             {{ trans('global.change_password') }}
@@ -111,7 +147,8 @@
                 @endcan
             @endif
             <li class="nav-item">
-                <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                <a href="#" class="nav-link"
+                   onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">
 
                     </i>

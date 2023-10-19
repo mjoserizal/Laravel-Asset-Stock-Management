@@ -9,10 +9,12 @@ class AddRelationshipFieldsToTransactionsTable extends Migration
     public function up()
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->unsignedInteger('asset_id');
+            $table->unsignedInteger('asset_id')->nullable();
             $table->foreign('asset_id', 'asset_fk_1230972')->references('id')->on('assets');
             $table->unsignedInteger('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_1230977')->references('id')->on('teams');
+            $table->unsignedInteger('disposable_id')->nullable();
+            $table->foreign('disposable_id', 'disposable_fk_1230967')->references('id')->on('disposables');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id', 'user_fk_1233734')->references('id')->on('users');
         });
