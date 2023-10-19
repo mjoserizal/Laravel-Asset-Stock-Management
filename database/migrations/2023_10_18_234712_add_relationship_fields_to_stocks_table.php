@@ -10,9 +10,13 @@ class AddRelationshipFieldsToStocksTable extends Migration
     {
         Schema::table('stocks', function (Blueprint $table) {
             $table->unsignedInteger('asset_id')->nullable();
-            $table->foreign('asset_id', 'asset_fk_1230965')->references('id')->on('assets');
+            $table->foreign('asset_id')
+                ->references('id')->on('assets')
+                ->onDelete('cascade'); // Tindakan kaskade
             $table->unsignedInteger('disposable_id')->nullable();
-            $table->foreign('disposable_id', 'disposable_fk_1230966')->references('id')->on('disposables');
+            $table->foreign('disposable_id')
+                ->references('id')->on('disposables')
+                ->onDelete('cascade'); // Tindakan kaskade
             $table->unsignedInteger('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_1230970')->references('id')->on('teams');
         });

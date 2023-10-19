@@ -1,12 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.disposable.create') }}">
-                Tambah Disposable
-            </a>
+    @can('disposable_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route('admin.disposable.create') }}">
+                    Tambah Disposable
+                </a>
+            </div>
         </div>
-    </div>
+    @endcan
     <div class="card">
         <div class="card-header">
             {{ trans('cruds.asset.title_singular') }} {{ trans('global.list') }}
@@ -60,22 +62,23 @@
 
                             <td>
 
-                                @can('asset_show')
+                                @can('disposable_show')
                                     <a class="btn btn-xs btn-primary"
-                                       href="{{ route('admin.assets.show', $disposable->id) }}">
+                                       href="{{ route('admin.disposable.show', $disposable->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('asset_edit')
+                                @can('disposable_edit')
                                     <a class="btn btn-xs btn-info"
-                                       href="{{ route('admin.assets.edit', $disposable->id) }}">
+                                       href="{{ route('admin.disposable.edit', $disposable->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('asset_delete')
-                                    <form action="{{ route('admin.assets.destroy', $disposable->id) }}" method="POST"
+                                @can('disposable_delete')
+                                    <form action="{{ route('admin.disposable.destroy', $disposable->id) }}"
+                                          method="POST"
                                           onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
                                           style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">

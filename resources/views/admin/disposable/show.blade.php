@@ -3,7 +3,7 @@
 
     <div class="card">
         <div class="card-header">
-            Detail Obat
+            Detail Disposable
         </div>
 
         <div class="card-body">
@@ -21,7 +21,7 @@
                             {{ trans('cruds.asset.fields.id') }}
                         </th>
                         <td>
-                            {{ $asset->id }}
+                            {{ $disposable->id }}
                         </td>
                     </tr>
                     <tr>
@@ -29,7 +29,7 @@
                             {{ trans('cruds.asset.fields.name') }}
                         </th>
                         <td>
-                            {{ $asset->name }}
+                            {{ $disposable->name }}
                         </td>
                     </tr>
                     <tr>
@@ -37,15 +37,15 @@
                             {{ trans('cruds.asset.fields.description') }}
                         </th>
                         <td>
-                            {{ $asset->description }}
+                            {{ $disposable->description }}
                         </td>
                     </tr>
                     <tr>
                         <th>
                             Barcode
                         </th>
-                        @if ($asset->getBarcodeContentAttribute())
-                            <td>{!! \Milon\Barcode\DNS1D::getBarcodeHTML($asset->getBarcodeContentAttribute(), 'C128') !!}</td>
+                        @if ($disposable->getBarcodeContentAttribute())
+                            <td>{!! \Milon\Barcode\DNS1D::getBarcodeHTML($disposable->getBarcodeContentAttribute(), 'C128') !!}</td>
                         @else
                             <td>No Asset Code Available</td>
                         @endif

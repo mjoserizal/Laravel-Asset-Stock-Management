@@ -9,7 +9,7 @@ use \DateTimeInterface;
 
 class Disposable extends Model
 {
-    use SoftDeletes, HasFactory;
+    use  HasFactory;
 
     public $table = 'disposables';
 

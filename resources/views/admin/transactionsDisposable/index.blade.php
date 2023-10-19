@@ -45,12 +45,12 @@
                             <td>
                                 @if ($transaction['is_transaction'] == 1)
                                     <a class="btn btn-xs btn-success"
-                                       href="{{ route('admin.transactions.statusTransaction', $transaction->id) }}">
+                                       href="{{ route('admin.transactions.transDisStatus', $transaction->id) }}">
                                         Confirmed
                                     </a>
                                 @else
                                     <a class="btn btn-xs btn-warning"
-                                       href="{{ route('admin.transactions.statusTransaction', $transaction->id) }}">
+                                       href="{{ route('admin.transactions.transDisStatus', $transaction->id) }}">
                                         Not Confirmed
                                     </a>
                                 @endif

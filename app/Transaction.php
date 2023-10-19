@@ -9,7 +9,7 @@ use \DateTimeInterface;
 
 class Transaction extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait;
+    use  MultiTenantModelTrait;
 
     public $table = 'transactions';
 

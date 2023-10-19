@@ -238,5 +238,26 @@ class TransactionsController extends Controller
         }
     }
 
+    public function transDisStatus(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return redirect()->route('admin.transactionsDisposable.index');
+        }
+
+        $newStatus = $transaction->is_transaction == 1 ? 0 : 1;
+
+        $updateTransaction = $transaction->update([
+            'is_transaction' => $newStatus
+        ]);
+
+        if ($updateTransaction) {
+            return redirect()->route('admin.transactionsDisposable.index');
+        } else {
+            return redirect()->route('admin.transactionsDisposable.index');
+        }
+    }
+
 
 }

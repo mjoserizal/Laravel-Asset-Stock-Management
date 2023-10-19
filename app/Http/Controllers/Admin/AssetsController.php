@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Stock;
 use PDF;
 use Milon\Barcode\DNS1D;
 use App\Asset;
@@ -68,14 +69,19 @@ class AssetsController extends Controller
         return view('admin.assets.show', compact('asset'));
     }
 
-    public function destroy(Asset $asset)
+    public function destroy($id)
     {
-        abort_if(Gate::denies('asset_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // Temukan asset berdasarkan ID
+        $asset = Asset::findOrFail($id);
 
+        // Hapus semua stok terkait dengan asset
+        Stock::where('asset_id', $asset->id)->delete();
+
+        // Hapus asset
         $asset->delete();
 
-        return back();
-
+        // Redirect ke halaman sebelumnya atau ke halaman lain yang diinginkan
+        return redirect()->back()->with('success', 'Asset berhasil dihapus beserta data terkait.');
     }
 
     public function massDestroy(MassDestroyAssetRequest $request)

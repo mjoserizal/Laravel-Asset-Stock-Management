@@ -34,6 +34,11 @@
                     <span class="help-block">{{ trans('cruds.asset.fields.description_helper') }}</span>
                 </div>
                 <div class="form-group">
+                    <label class="required" for="expired_at">Expired At:</label>
+                    <input type="date" class="form-control" id="expired_at" name="expired_at"
+                           value="{{ old('expired_at', now()->format('Y-m-d')) }}">
+                </div>
+                <div class="form-group">
                     <label for="id_jenis_obat">Jenis Obat</label>
                     <select class="form-control select2 {{ $errors->has('id_jenis_obat') ? 'is-invalid' : '' }}"
                             name="id_jenis_obat" id="id_jenis_obat">

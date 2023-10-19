@@ -58,9 +58,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Transactions
     //    Route::delete('transactions/destroy', 'TransactionsController@massDestroy')->name('transactions.massDestroy');
     Route::post('transactions/{stock}/storeStock', 'TransactionsController@storeStock')->name('transactions.storeStock');
+
     Route::resource('transactions', 'TransactionsController')->only(['index']);
 
     Route::get('transactions/{id}/', 'TransactionsController@statusTransaction')->name('transactions.statusTransaction');
+
+    Route::get('transactionsDis/{id}/', 'TransactionsController@transDisStatus')->name('transactions.transDisStatus');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

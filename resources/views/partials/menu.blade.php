@@ -107,33 +107,52 @@
                     </a>
                 </li>
             @endcan
-            <li class="nav-item">
-                <a href="{{ route("admin.disposable.index") }}"
-                   class="nav-link {{ request()->is('admin/disposable') || request()->is('admin/disposable/*') ? 'active' : '' }}">
-                    <i class="fa-fw fas fa-cogs nav-icon">
+            @can('disposable_access')
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+                        <i class="fa-fw fas fa-capsules nav-icon">
 
-                    </i>
-                    Disposable
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route("admin.stocksDisposable.index") }}"
-                   class="nav-link {{ request()->is('admin/stockDisposable') || request()->is('admin/stockDisposable/*') ? 'active' : '' }}">
-                    <i class="fa-fw fas fa-cogs nav-icon">
+                        </i>
+                        Disposable
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        @can('disposable_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.disposable.index") }}"
+                                   class="nav-link {{ request()->is('admin/disposable') || request()->is('admin/disposable/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-capsules nav-icon">
 
-                    </i>
-                    Stok Disposable
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route("admin.transactionsDisposable.index") }}"
-                   class="nav-link {{ request()->is('admin/transactionsDisposable') || request()->is('admin/transactionsDisposable/*') ? 'active' : '' }}">
-                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    </i>
+                                    Disposable
+                                </a>
+                            </li>
+                        @endcan
+                        @can('disposable_stock_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.stocksDisposable.index") }}"
+                                   class="nav-link {{ request()->is('admin/stockDisposable') || request()->is('admin/stockDisposable/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-cogs nav-icon">
 
-                    </i>
-                    Transaksi Disposable
-                </a>
-            </li>
+                                    </i>
+                                    Stok Disposable
+                                </a>
+                            </li>
+                        @endcan
+                        @can('transactions_disposable_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.transactionsDisposable.index") }}"
+                                   class="nav-link {{ request()->is('admin/transactionsDisposable') || request()->is('admin/transactionsDisposable/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-money nav-icon">
+
+                                    </i>
+                                    Transaksi Disposable
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                 @can('profile_password_edit')
                     <li class="nav-item">

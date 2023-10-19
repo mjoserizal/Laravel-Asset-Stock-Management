@@ -15,7 +15,7 @@ use \DateTimeInterface;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, HasApiTokens, HasFactory;
+    use  Notifiable, HasApiTokens, HasFactory;
 
     public $table = 'users';
 
