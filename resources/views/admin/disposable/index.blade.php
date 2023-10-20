@@ -43,7 +43,14 @@
                     </thead>
                     <tbody>
                     @foreach ($disposable as $key => $disposable)
-                        <tr data-entry-id="{{ $disposable->id }}">
+                        @php
+                            $expirationDate = \Carbon\Carbon::parse($disposable->expired_at);
+                            $now = \Carbon\Carbon::now();
+                            $sixMonthsLater = $now->copy()->addMonths(6);
+                            $isExpiredInSixMonths = $expirationDate->lessThanOrEqualTo($sixMonthsLater);
+                        @endphp
+                        <tr data-entry-id="{{ $disposable->id }}"
+                            @if($isExpiredInSixMonths) class="table-danger" @endif>
                             <td>
 
                             </td>

@@ -3,17 +3,11 @@
 
     <div class="card">
         <div class="card-header">
-            Detail Disposable
+            Detail Alat
         </div>
 
         <div class="card-body">
             <div class="form-group">
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.assets.index') }}">
-                        {{ trans('global.back_to_list') }}
-                    </a>
-                    <!-- Tambah tombol ekspor di sini -->
-                </div>
                 <table class=" table table-bordered table-striped table-hover datatable datatable-Asset">
                     <tbody>
                     <tr>
@@ -42,11 +36,22 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.asset.fields.description') }}
+                            Keterangan
                         </th>
                         <td>
                             {{ $alat->keterangan }}
                         </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Barcode
+                        </th>
+                        @if ($alat->getBarcodeContentAttribute())
+                            <td>{!! \Milon\Barcode\DNS1D::getBarcodeHTML($alat->getBarcodeContentAttribute(), 'C128') !!}</td>
+                        @else
+                            <td>No Asset Code Available</td>
+                        @endif
+
                     </tr>
                     </tbody>
                 </table>

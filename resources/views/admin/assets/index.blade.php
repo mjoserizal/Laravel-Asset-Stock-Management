@@ -46,7 +46,14 @@
                     </thead>
                     <tbody>
                     @foreach ($assets as $key => $asset)
-                        <tr data-entry-id="{{ $asset->id }}">
+                        @php
+                            $expirationDate = \Carbon\Carbon::parse($asset->expired_at);
+                            $now = \Carbon\Carbon::now();
+                            $sixMonthsLater = $now->copy()->addMonths(6);
+                            $isExpiredInSixMonths = $expirationDate->lessThanOrEqualTo($sixMonthsLater);
+                        @endphp
+                        <tr data-entry-id="{{ $asset->id }}"
+                            @if($isExpiredInSixMonths) class="table-danger" @endif>
                             <td>
 
                             </td>

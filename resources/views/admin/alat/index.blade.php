@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @can('disposable_create')
+    @can('alat_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route('admin.alat.create') }}">
@@ -62,21 +62,21 @@
 
                             <td>
 
-                                @can('disposable_show')
+                                @can('alat_show')
                                     <a class="btn btn-xs btn-primary"
                                        href="{{ route('admin.alat.show', $alat->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('disposable_edit')
+                                @can('alat_edit')
                                     <a class="btn btn-xs btn-info"
                                        href="{{ route('admin.alat.edit', $alat->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('disposable_delete')
+                                @can('alat_delete')
                                     <form action="{{ route('admin.alat.destroy', $alat->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('{{ trans('global.areYouSure') }}');"

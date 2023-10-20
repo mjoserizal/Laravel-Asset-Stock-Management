@@ -4,7 +4,10 @@
         <div class="col-md-6">
             <div class="card mx-4">
                 <div class="card-body p-4">
-                    <h1>Apoteker Login</h1>
+                    <div class="text-center mt-4">
+                        <img src="{{ asset('images/adaro.png') }}" alt="Adaro Energy Logo" width="150">
+                    </div>
+
 
                     <p class="text-muted">{{ trans('global.login') }}</p>
 
