@@ -3,7 +3,7 @@
 
         <ul class="nav">
             <div class="text-center mt-4">
-                <img src="{{ asset('images/adaro.png') }}" alt="Adaro Energy Logo" width="50" height="50">
+                <img src="{{ asset('images/adaroenergy.png') }}" alt="Adaro Energy Logo" width="150">
             </div>
             @can('user_management_access')
                 <li class="nav-item nav-dropdown">

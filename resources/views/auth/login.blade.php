@@ -5,7 +5,7 @@
             <div class="card mx-4">
                 <div class="card-body p-4">
                     <div class="text-center mt-4">
-                        <img src="{{ asset('images/adaro.png') }}" alt="Adaro Energy Logo" width="150">
+                        <img src="{{ asset('images/adaroenergy.png') }}" alt="Adaro Energy Logo" width="200">
                     </div>
 
 
