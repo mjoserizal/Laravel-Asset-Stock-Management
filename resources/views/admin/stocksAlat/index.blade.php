@@ -31,7 +31,7 @@
                         </th>
                         @admin
                         <th>
-                            Hospital
+                            Gudang
                         </th>
                         @endadmin
                         @admin

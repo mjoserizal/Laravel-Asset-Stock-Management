@@ -29,36 +29,18 @@
                         <th>
                             {{ trans('cruds.stock.fields.asset') }}
                         </th>
-                        @admin
                         <th>
-                            Hospital
+                            Gudang
                         </th>
-                        @endadmin
-                        @admin
-                        <th>
-                            Stok Sekarang
-                        </th>
-                        @endadmin
-                        @user
                         <th>
                             Stok Tersedia
                         </th>
-                        @enduser
-                        @admin
                         <th>
                             Tambah Stok
                         </th>
-                        @endadmin
-                        @user
-                        <th>
-                            Pesan
-                        </th>
-                        @enduser
-                        @admin
                         <th>
                             Kurangi Stok
                         </th>
-                        @endadmin
                     </tr>
                     </thead>
                     <tbody>
@@ -67,11 +49,9 @@
                             <td>
                                 {{ $stock->asset->name ?? '' }}
                             </td>
-                            @admin
                             <td>
                                 {{ $stock->team->name }}
                             </td>
-                            @endadmin
                             <td>
                                 {{ $stock->current_stock ?? '' }}
                             </td>
@@ -83,17 +63,12 @@
                                         <input type="hidden" name="action" value="add">
                                         <input type="number" name="stock" class="form-control form-control-sm col-4"
                                                min="1">
-                                        @admin
                                         <input type="submit" class="btn btn-xs btn-danger" value="TAMBAH">
-                                        @endadmin
-                                        @user
-                                        <input type="submit" class="btn btn-xs btn-danger" value="PESAN">
-                                        @enduser
+
                                     </form>
                                 </td>
                             @endcan
                             @can('stock_delete')
-                                @admin
                                 <td>
                                     <form action="{{ route('admin.transactions.storeStock', $stock->id) }}"
                                           method="POST" style="display: inline-block;" class="form-inline">
@@ -104,19 +79,6 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="REMOVE">
                                     </form>
                                 </td>
-                                @endadmin
-                                @user
-                                <td>
-                                    <form action="{{ route('admin.transactions.storeStock', $stock->id) }}"
-                                          method="POST" style="display: inline-block;" class="form-inline">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="action" value="remove">
-                                        <input type="number" name="stock" class="form-control form-control-sm col-4"
-                                               min="1">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="PESAN">
-                                    </form>
-                                </td>
-                                @enduser
                             @endcan
 
                         </tr>

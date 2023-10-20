@@ -133,6 +133,46 @@ class TransactionsController extends Controller
 
     }
 
+    public function storeStock(Stock $stock)
+    {
+        $action = request()->input('action', 'add') == 'add' ? 'add' : 'remove';
+        $stockAmount = request()->input('stock', 1);
+        $sign = $action == 'add' ? '+' : '-';
+
+        if ($stockAmount < 1) {
+            return redirect()->route('admin.stocks.index')->with([
+                'error' => 'No item was added/removed. Amount must be greater than 1.',
+            ]);
+        }
+
+        Transaction::create([
+            'stock' => $sign . $stockAmount,
+            'asset_id' => $stock->asset->id,
+            'team_id' => $stock->team->id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        if ($action == 'add') {
+            $stock->increment('current_stock', $stockAmount);
+            $status = $stockAmount . ' item(-s) was added to stock.';
+        }
+
+        if ($action == 'remove') {
+            if ($stock->current_stock - $stockAmount < 0) {
+                return redirect()->route('admin.stocks.index')->with([
+                    'error' => 'Not enough items in stock.',
+                ]);
+            }
+
+            $stock->decrement('current_stock', $stockAmount);
+            $status = $stockAmount . ' item(-s) was removed from stock.';
+        }
+
+        return redirect()->route('admin.stocks.index')->with([
+            'status' => $status,
+        ]);
+    }
+
     public function storeStockDisposable(Stock $stock)
     {
         $action = request()->input('action', 'add') == 'add' ? 'add' : 'remove';
