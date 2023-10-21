@@ -30,10 +30,10 @@
                             {{ trans('cruds.asset.fields.name') }}
                         </th>
                         <th>
-                            Keterangan
+                            {{ trans('cruds.asset.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.asset.fields.description') }}
+                            Keterangan
                         </th>
                         <th>
                             Image
@@ -57,10 +57,10 @@
                                 {{ $alat->name ?? '' }}
                             </td>
                             <td>
-                                {{ $alat->keterangan ?? '' }}
-                            </td>
-                            <td>
                                 {{ $alat->description ?? '' }}</td>
+                            <td>
+                                <span class="badge badge-info">{{ $alat->keterangan }}</span>
+                            </td>
                             <td>
                                 @if($alat->image_path)
                                     <img src="{{ asset($alat->image_path) }}" alt="Asset Image" width="100">

@@ -11,21 +11,29 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
-                'id'             => 1,
-                'name'           => 'Admin',
-                'email'          => 'admin@admin.com',
+                'id' => 1,
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
                 'password' => Hash::make('admin123'),
                 'remember_token' => null,
             ],
         ];
         $jenisobat = [
             [
-                'id'             => 1,
-                'name'           => 'Cair',
+                'id' => 1,
+                'name' => 'Cair',
             ],
             [
-                'id'             => 2,
-                'name'           => 'Tablet',
+                'id' => 2,
+                'name' => 'Tablet',
+            ],
+            [
+                'id' => 3,
+                'name' => 'Caplet',
+            ],
+            [
+                'id' => 4,
+                'name' => 'Box',
             ],
         ];
         JenisObat::insert($jenisobat);

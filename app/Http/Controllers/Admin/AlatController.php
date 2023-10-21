@@ -37,8 +37,8 @@ class AlatController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('alat'), $imageName);
-            $data['image_path'] = 'alat/' . $imageName;
+            $image->move(public_path('images'), $imageName);
+            $data['image_path'] = 'images/' . $imageName;
         }
 
         // Buat disposable dengan data yang sudah disiapkan

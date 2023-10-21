@@ -64,7 +64,7 @@
                                 {{ $disposable->name ?? '' }}
                             </td>
                             <td>
-                                {{ $disposable->expired_at ? \Carbon\Carbon::parse($disposable->expired_at)->format('D-M-Y') : 'N/A' }}
+                                {{ $asset->expired_at ? \Carbon\Carbon::parse($asset->expired_at)->translatedFormat('l, j F Y') : 'N/A' }}
                             </td>
                             <td>
                                 {{ $disposable->description ?? '' }}</td>
