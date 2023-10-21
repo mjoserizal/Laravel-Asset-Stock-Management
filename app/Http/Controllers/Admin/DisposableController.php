@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateAssetRequest;
 use App\Http\Requests\UpdateDisposableRequest;
 use App\JenisObat;
 use App\Stock;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,8 +31,20 @@ class DisposableController extends Controller
 
     public function store(StoreDisposableRequest $request)
     {
+        // Validasi formulir yang sudah dihandle oleh StoreDisposableRequest
 
-        $disposable = Disposable::create($request->all());
+        $data = $request->all();
+
+        // Handle upload gambar jika ada gambar yang diunggah
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $data['image_path'] = 'images/' . $imageName;
+        }
+
+        // Buat disposable dengan data yang sudah disiapkan
+        $disposable = Disposable::create($data);
 
         // Membuat entri baru di stocks_disposables
         Stock::create([
@@ -39,7 +52,8 @@ class DisposableController extends Controller
             'team_id' => 1, // Memeriksa apakah pengguna diautentikasi, jika iya gunakan team_id pengguna, jika tidak, gunakan nilai 1
             'current_stock' => 0, // Tentukan jumlah stok awal jika perlu
         ]);
-        return redirect()->route('admin.disposable.index');
+
+        return redirect()->route('admin.disposable.index')->with('success', 'Disposable berhasil ditambahkan.');
     }
 
     public function show(Disposable $disposable)
@@ -55,8 +69,24 @@ class DisposableController extends Controller
 
     public function update(UpdateDisposableRequest $request, Disposable $disposable)
     {
-        $disposable->update($request->all());
+        $data = $request->all();
 
+        // Handle upload gambar jika ada gambar yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($disposable->image_path) {
+                File::delete(public_path($disposable->image_path));
+            }
+
+            // Simpan gambar baru ke direktori 'images' dalam direktori public
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            file_put_contents(public_path('images/' . $imageName), file_get_contents($image));
+            $data['image_path'] = 'images/' . $imageName;
+        }
+
+        // Perbarui asset dengan data yang sudah disiapkan
+        $disposable->update($data);
         return redirect()->route('admin.disposable.index');
 
     }

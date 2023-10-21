@@ -11,7 +11,7 @@ class StoreAlatRequest extends FormRequest
 {
     public function authorize()
     {
-
+        return true;
     }
 
     public function rules()

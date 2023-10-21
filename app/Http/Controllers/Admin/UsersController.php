@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Role;
 use App\Team;
+use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -75,14 +76,18 @@ class UsersController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $user = User::findOrFail($id);
+
+        // Hapus semua stok terkait dengan asset
+        Transaction::where('user_id', $user->id)->delete();
+
+        // Hapus asset
         $user->delete();
-
-        return back();
-
+        return redirect()->back()->with('success', 'User berhasil dihapus beserta data terkait.');
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

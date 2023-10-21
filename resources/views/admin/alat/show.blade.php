@@ -44,6 +44,18 @@
                     </tr>
                     <tr>
                         <th>
+                            Image
+                        </th>
+                        <td>
+                            @if($alat->image_path)
+                                <img src="{{ asset($alat->image_path) }}" alt="Asset Image" width="100">
+                            @else
+                                No Image Available
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Barcode
                         </th>
                         @if ($alat->getBarcodeContentAttribute())

@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('alats', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('image_path')->nullable();
             $table->longText('keterangan')->nullable();
             $table->longText('description')->nullable();
             $table->timestamps();

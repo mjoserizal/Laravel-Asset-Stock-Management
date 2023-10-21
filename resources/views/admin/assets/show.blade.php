@@ -42,6 +42,18 @@
                     </tr>
                     <tr>
                         <th>
+                            Image
+                        </th>
+                        <td>
+                            @if($asset->image_path)
+                                <img src="{{ asset($asset->image_path) }}" alt="Asset Image" width="100">
+                            @else
+                                No Image Available
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Barcode
                         </th>
                         @if ($asset->getBarcodeContentAttribute())

@@ -40,6 +40,9 @@
                             Jenis Obat
                         </th>
                         <th>
+                            Image
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -70,7 +73,13 @@
                                 {{ $asset->description ?? '' }}</td>
                             <td>
                                 {{ $asset->jenisObat->name }}</td>
-
+                            <td>
+                                @if($asset->image_path)
+                                    <img src="{{ asset($asset->image_path) }}" alt="Asset Image" width="100">
+                                @else
+                                    No Image Available
+                                @endif
+                            </td>
 
                             <td>
 

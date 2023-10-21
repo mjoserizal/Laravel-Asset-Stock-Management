@@ -35,6 +35,9 @@
                         <th>
                             {{ trans('cruds.asset.fields.description') }}
                         </th>
+                        <th>
+                            Image
+                        </th>
 
                         <th>
                             &nbsp;
@@ -58,7 +61,13 @@
                             </td>
                             <td>
                                 {{ $alat->description ?? '' }}</td>
-
+                            <td>
+                                @if($alat->image_path)
+                                    <img src="{{ asset($alat->image_path) }}" alt="Asset Image" width="100">
+                                @else
+                                    No Image Available
+                                @endif
+                            </td>
 
                             <td>
 

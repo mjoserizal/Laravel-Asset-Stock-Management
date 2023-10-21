@@ -21,6 +21,7 @@ class Alat extends Model
 
     protected $fillable = [
         'name',
+        'image_path',
         'created_at',
         'updated_at',
         'deleted_at',

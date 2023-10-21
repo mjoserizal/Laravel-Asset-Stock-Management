@@ -6,10 +6,12 @@ use App\Alat;
 use App\Asset;
 use App\Disposable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAlatRequest;
 use App\Http\Requests\StoreDisposableRequest;
 use App\Http\Requests\UpdateAlatRequest;
 use App\Http\Requests\UpdateDisposableRequest;
 use App\Stock;
+use Illuminate\Support\Facades\File;
 
 class AlatController extends Controller
 {
@@ -26,10 +28,21 @@ class AlatController extends Controller
         return view('admin.alat.create');
     }
 
-    public function store(StoreDisposableRequest $request)
+    public function store(StoreAlatRequest $request)
     {
 
-        $alat = Alat::create($request->all());
+        $data = $request->all();
+
+        // Handle upload gambar jika ada gambar yang diunggah
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('alat'), $imageName);
+            $data['image_path'] = 'alat/' . $imageName;
+        }
+
+        // Buat disposable dengan data yang sudah disiapkan
+        $alat = Alat::create($data);
 
         // Membuat entri baru di stocks_disposables
         Stock::create([
@@ -68,8 +81,24 @@ class AlatController extends Controller
 
     public function update(UpdateAlatRequest $request, Alat $alat)
     {
-        $alat->update($request->all());
+        $data = $request->all();
 
+        // Handle upload gambar jika ada gambar yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($alat->image_path) {
+                File::delete(public_path($alat->image_path));
+            }
+
+            // Simpan gambar baru ke direktori 'images' dalam direktori public
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            file_put_contents(public_path('images/' . $imageName), file_get_contents($image));
+            $data['image_path'] = 'images/' . $imageName;
+        }
+
+        // Perbarui asset dengan data yang sudah disiapkan
+        $alat->update($data);
         return redirect()->route('admin.alat.index');
 
     }

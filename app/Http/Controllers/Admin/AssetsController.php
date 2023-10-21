@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Stock;
 use PDF;
 use Milon\Barcode\DNS1D;
@@ -35,12 +37,28 @@ class AssetsController extends Controller
 
     public function store(StoreAssetRequest $request)
     {
+        // Validasi formulir yang sudah dihandle oleh StoreAssetRequest
 
-        $asset = Asset::create($request->all());
+        // Handle upload gambar
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-        return redirect()->route('admin.assets.index');
+            // Simpan gambar ke direktori 'images' dalam direktori public
+            $image->move(public_path('images'), $imageName);
 
+            // Simpan path gambar ke dalam database
+            $assetData = $request->except('image'); // Ambil semua data kecuali gambar
+            $assetData['image_path'] = 'images/' . $imageName;
+            $asset = Asset::create($assetData);
+        } else {
+            // Jika pengguna tidak mengunggah gambar, simpan data tanpa kolom gambar
+            $asset = Asset::create($request->all());
+        }
+
+        return redirect()->route('admin.assets.index')->with('success', 'Asset berhasil ditambahkan.');
     }
+
 
     public function assetsCodeExists($number)
     {
@@ -56,11 +74,30 @@ class AssetsController extends Controller
 
     public function update(UpdateAssetRequest $request, Asset $asset)
     {
-        $asset->update($request->all());
+        // Validasi formulir yang sudah dihandle oleh UpdateAssetRequest
 
-        return redirect()->route('admin.assets.index');
+        $data = $request->all();
 
+        // Handle upload gambar jika ada gambar yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($asset->image_path) {
+                File::delete(public_path($asset->image_path));
+            }
+
+            // Simpan gambar baru ke direktori 'images' dalam direktori public
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            file_put_contents(public_path('images/' . $imageName), file_get_contents($image));
+            $data['image_path'] = 'images/' . $imageName;
+        }
+
+        // Perbarui asset dengan data yang sudah disiapkan
+        $asset->update($data);
+
+        return redirect()->route('admin.assets.index')->with('success', 'Asset berhasil diperbarui.');
     }
+
 
     public function show(Asset $asset)
     {

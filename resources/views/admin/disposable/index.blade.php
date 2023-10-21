@@ -35,6 +35,9 @@
                         <th>
                             {{ trans('cruds.asset.fields.description') }}
                         </th>
+                        <th>
+                            Image
+                        </th>
 
                         <th>
                             &nbsp;
@@ -65,7 +68,13 @@
                             </td>
                             <td>
                                 {{ $disposable->description ?? '' }}</td>
-
+                            <td>
+                                @if($disposable->image_path)
+                                    <img src="{{ asset($disposable->image_path) }}" alt="Asset Image" width="100">
+                                @else
+                                    No Image Available
+                                @endif
+                            </td>
 
                             <td>
 

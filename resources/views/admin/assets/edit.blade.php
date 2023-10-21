@@ -22,6 +22,17 @@
                     <span class="help-block">{{ trans('cruds.asset.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input type="file" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image"
+                           name="image" accept="image/*">
+                    @if($errors->has('image'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('image') }}
+                        </div>
+                    @endif
+                    <span class="help-block">Pilih gambar untuk diunggah.</span>
+                </div>
+                <div class="form-group">
                     <label for="description">{{ trans('cruds.asset.fields.description') }}</label>
                     <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
                               name="description"

@@ -21,6 +21,7 @@ class Disposable extends Model
 
     protected $fillable = [
         'name',
+        'image_path',
         'expired_at',
         'created_at',
         'updated_at',
