@@ -29,36 +29,18 @@
                         <th>
                             Alat
                         </th>
-                        @admin
                         <th>
                             Gudang
                         </th>
-                        @endadmin
-                        @admin
                         <th>
                             Stok Sekarang
                         </th>
-                        @endadmin
-                        @user
-                        <th>
-                            Stok Tersedia
-                        </th>
-                        @enduser
-                        @admin
                         <th>
                             Tambah Stok
                         </th>
-                        @endadmin
-                        @user
-                        <th>
-                            Pesan
-                        </th>
-                        @enduser
-                        @admin
                         <th>
                             Kurangi Stok
                         </th>
-                        @endadmin
                     </tr>
                     </thead>
                     <tbody>
@@ -67,11 +49,9 @@
                             <td>
                                 {{ $stock->alat->name ?? '' }}
                             </td>
-                            @admin
                             <td>
                                 {{ $stock->team->name }}
                             </td>
-                            @endadmin
                             <td>
                                 {{ $stock->current_stock ?? '' }}
                             </td>
