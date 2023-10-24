@@ -104,9 +104,6 @@
 
                 </table>
             </div>
-            <a class="btn btn-primary" href="{{ route('admin.admin.assets.exportPdf') }}">
-                Export PDF Barcode
-            </a>
         </div>
     </div>
 @endsection
