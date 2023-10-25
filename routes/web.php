@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Admin\AssetsController;
 
-Route::redirect('/', '/login');
+Route::redirect('/login', '/login');
+Route::get('/', [AssetsController::class, 'landingPage'])->name('landingPage');
+
 Route::view('/register', 'register')->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
@@ -20,7 +23,7 @@ Auth::routes(['register' => false]);
 // Admin
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
-    Route::redirect('/', '/login')->name('home');
+    Route::redirect('/login', '/login')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');

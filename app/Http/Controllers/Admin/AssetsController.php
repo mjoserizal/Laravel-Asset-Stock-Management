@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use App\Stock;
-use PDF;
-use Milon\Barcode\DNS1D;
 use App\Asset;
+use App\Stock;
 use App\JenisObat;
+// use PDF;
+use Barryvdh\DomPDF\PDF;
+use Milon\Barcode\DNS1D;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
 use App\Http\Requests\MassDestroyAssetRequest;
@@ -25,12 +26,21 @@ class AssetsController extends Controller
         $assets = Asset::with('jenisObat')->get();
 
         return view('admin.assets.index', compact('assets'));
+        // return view('landingPage', compact('assets'));
+    }
+
+    public function landingPage()
+    {
+        $assets = Asset::with('jenisObat')->get();
+        $stocks = Stock::whereNotNull('asset_id')->get();
+
+        return view('landingPage', compact('assets','stocks'));
     }
 
 
     public function create()
     {
-//        abort_if(Gate::denies('asset_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('asset_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $jenisobat = JenisObat::all()->pluck('name', 'id');
         return view('admin.assets.create', compact('jenisobat'));
     }
@@ -126,15 +136,12 @@ class AssetsController extends Controller
         Asset::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
 
     public function exportPdf()
     {
         $assets = Asset::all();
-
         $pdf = PDF::loadView('assets_pdf', compact('assets'));
         return $pdf->download('barcode-daftar-obat.pdf');
     }
-
 }
