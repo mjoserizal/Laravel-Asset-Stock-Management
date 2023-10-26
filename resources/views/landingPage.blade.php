@@ -127,6 +127,8 @@
 
             <div class="container">
                 <div id="search-results" class="row"></div>
+                <br>
+
             </div>
 
             <div class="container">
@@ -135,21 +137,15 @@
                         @php
                             $stock = $stocks->where('asset_id', $asset->id)->first();
                         @endphp
-                        <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                        <div class="col-sm-6 col-lg-4 mb-4">
                             <div class="card">
-                                <div class="card-body">
-                                    @if ($asset->image_path)
-                                        <a href="shop-single.html">
-                                            <img src="{{ asset($asset->image_path) }}" alt="Image" width="250"
-                                                height="250">
-                                        </a>
-                                    @else
-                                        <a href="shop-single.html">
-                                            Gambar Tidak Tersedia
-                                        </a>
-                                    @endif
-                                    <h3 class="text-dark"><a href="shop-single.html">{{ $asset->name ?? '' }}</a>
-                                    </h3>
+                                @if ($asset->image_path)
+                                    <img src="{{ asset($asset->image_path) }}" alt="Image" class="card-img-top">
+                                @else
+                                    <img src="{{ asset('images/adaro.png') }}" alt="Image" class="card-img-top">
+                                @endif
+                                <div class="card-body text-center">
+                                    <h3 class="card-title">{{ $asset->name ?? '' }}</h3>
                                     <p class="price">
                                         @if ($stock)
                                             Stok Tersedia: {{ $stock->current_stock }}
@@ -164,6 +160,7 @@
                 </div>
             </div>
 
+
             <style>
                 /* Atur tinggi dan lebar elemen 'item' sesuai kebutuhan Anda */
                 .item {
@@ -171,6 +168,39 @@
                     /* Sesuaikan dengan tinggi yang Anda inginkan */
                     width: 250px;
                     /* Sesuaikan dengan lebar yang Anda inginkan */
+                }
+
+                /* CSS untuk card */
+                .card {
+                    margin-bottom: 20px;
+                    align-items: center;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    background-color: #fff;
+                }
+
+                .card img {
+                    max-width: 80%;
+                    height: 300px;
+                }
+
+                .card-title {
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    margin-top: 10px;
+                    color: black;
+                }
+
+                .card-text {
+                    font-size: 1rem;
+                    color: #000000;
+                }
+
+                .price {
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    margin-top: 10px;
                 }
             </style>
 
@@ -255,13 +285,17 @@
                         const item = document.createElement("div");
                         item.className = "col-sm-6 col-lg-4 text-center item mb-4";
                         item.innerHTML = `
-                            <a href="shop-single.html">
-                                <img src="${asset.image_path}" alt="Image" width="300">
-                            </a>
-                            <h3 class="text-dark"><a href="shop-single.html">${asset.name}</a></h3>
-                            <p class="price">
-                                Stok ${stock ? `Tersedia: ${stock.current_stock}` : 'Tidak Tersedia'}
-                            </p>
+                            <div class="col-sm-6 col-lg-4 mb-4">
+                                <div class="card" style="height: 300px; width: 250px;">
+                                    ${asset.image_path ? `<img src="${asset.image_path}" alt="Image" style="max-width: 80%; height: 300px;" class="card-img-top">` : `<img src="{{ asset('images/adaro.png') }}" alt="Image" style="max-width: 80%; height: 300px;" class="card-img-top">`}
+                                    <div class="card-body text-center">
+                                        <h3 class="card-title" style="font-size: 1.25rem; font-weight: bold; margin-top: 10px;">${asset.name || ''}</h3>
+                                        <p class="price" style="font-size: 1.25rem; font-weight: bold; margin-top: 10px;">
+                                            Stok ${stock ? `Tersedia: ${stock.current_stock}` : 'Tidak Tersedia'}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         `;
                         searchResults.appendChild(item);
                     });

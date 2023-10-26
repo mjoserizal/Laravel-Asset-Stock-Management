@@ -9,6 +9,13 @@
             </div>
         </div>
     @endcan
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route('exportPdf') }}">
+                Export PDF
+            </a>
+        </div>
+    </div>
     <div class="card">
         <div class="card-header">
             List Obat

@@ -34,7 +34,7 @@ class AssetsController extends Controller
         $assets = Asset::with('jenisObat')->get();
         $stocks = Stock::whereNotNull('asset_id')->get();
 
-        return view('landingPage', compact('assets','stocks'));
+        return view('landingPage', compact('assets', 'stocks'));
     }
 
 
