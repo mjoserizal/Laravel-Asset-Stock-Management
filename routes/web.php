@@ -5,9 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AssetsController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\LandingPageController;
 
 Route::redirect('/wp-admin', '/login');
-Route::get('/', [AssetsController::class, 'landingPage'])->name('landingPage');
+Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
 Route::get('/exportPDF', [ExportController::class, 'exportPdf'])->name('exportPdf');
 
 Route::view('/register', 'register')->name('register.form');

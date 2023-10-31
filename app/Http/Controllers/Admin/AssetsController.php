@@ -29,13 +29,13 @@ class AssetsController extends Controller
         // return view('landingPage', compact('assets'));
     }
 
-    public function landingPage()
-    {
-        $assets = Asset::with('jenisObat')->get();
-        $stocks = Stock::whereNotNull('asset_id')->get();
+    // public function landingPage()
+    // {
+    //     $assets = Asset::with('jenisObat')->get();
+    //     $stocks = Stock::whereNotNull('asset_id')->get();
 
-        return view('landingPage', compact('assets', 'stocks'));
-    }
+    //     return view('landingPage', compact('assets', 'stocks'));
+    // }
 
 
     public function create()
