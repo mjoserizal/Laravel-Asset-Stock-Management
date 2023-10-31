@@ -26,7 +26,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.asset.fields.name') }}
+                            Obat
                         </th>
                         <td>
                             {{ $asset->name }}
@@ -38,6 +38,14 @@
                         </th>
                         <td>
                             {{ $asset->description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Suhu
+                        </th>
+                        <td>
+                            {{ $asset->suhu }}°C
                         </td>
                     </tr>
                     <tr>

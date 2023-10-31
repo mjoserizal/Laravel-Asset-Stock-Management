@@ -9,6 +9,8 @@ use App\Http\Controllers\LandingPageController;
 
 Route::redirect('/wp-admin', '/login');
 Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
+Route::get('/alat', [LandingPageController::class, 'landingPageAlat'])->name('landingPageAlat');
+Route::get('/disposable', [LandingPageController::class, 'landingPageDisposable'])->name('landingPageDisposable');
 Route::get('/exportPDF', [ExportController::class, 'exportPdf'])->name('exportPdf');
 
 Route::view('/register', 'register')->name('register.form');

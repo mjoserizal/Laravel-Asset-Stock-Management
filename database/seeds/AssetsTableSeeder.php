@@ -37,6 +37,7 @@ class AssetsTableSeeder extends Seeder
                 'name' => $asset,
                 'description' => $asset,
                 'id_jenis_obat' => 1,
+                'suhu' => 37,
             ]);
         }
     }

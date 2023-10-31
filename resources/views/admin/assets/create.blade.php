@@ -21,6 +21,17 @@
                     <span class="help-block">{{ trans('cruds.asset.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
+                    <label class="required" for="suhu">Suhu</label>
+                    <input class="form-control {{ $errors->has('suhu') ? 'is-invalid' : '' }}" type="number" name="suhu"
+                           id="suhu" value="{{ old('suhu', '') }}" required>
+                    @if($errors->has('suhu'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('suhu') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.asset.fields.name_helper') }}</span>
+                </div>
+                <div class="form-group">
                     <label for="image">Image:</label>
                     <input type="file" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image"
                            name="image" accept="image/*">

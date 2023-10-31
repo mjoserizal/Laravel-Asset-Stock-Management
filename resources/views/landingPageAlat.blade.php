@@ -129,7 +129,7 @@
 
             <div class="container">
                 <div class="row">
-                    @foreach ($assets as $asset)
+                    @foreach ($alat as $asset)
                         @php
                             $stock = $stocks->where("asset_id", $asset->id)->first();
                         @endphp
@@ -164,28 +164,28 @@
                 <div class="row align-center">
                     <div class="col-12 text-center">
                         <ul class="pagination justify-content-center">
-                            @if ($assets->onFirstPage())
+                            @if ($alat->onFirstPage())
                                 <li class="page-item disabled">
                                     <span class="page-link" aria-hidden="true">&laquo;</span>
                                 </li>
                             @else
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ $assets->previousPageUrl() }}"
+                                    <a class="page-link" href="{{ $alat->previousPageUrl() }}"
                                         aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                             @endif
 
-                            @for ($i = 1; $i <= $assets->lastPage(); $i++)
-                                <li class="page-item {{ $i === $assets->currentPage() ? "active" : "" }}">
-                                    <a class="page-link" href="{{ $assets->url($i) }}">{{ $i }}</a>
+                            @for ($i = 1; $i <= $alat->lastPage(); $i++)
+                                <li class="page-item {{ $i === $alat->currentPage() ? "active" : "" }}">
+                                    <a class="page-link" href="{{ $alat->url($i) }}">{{ $i }}</a>
                                 </li>
                             @endfor
 
-                            @if ($assets->hasMorePages())
+                            @if ($alat->hasMorePages())
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ $assets->nextPageUrl() }}" aria-label="Next">
+                                    <a class="page-link" href="{{ $alat->nextPageUrl() }}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
@@ -198,7 +198,7 @@
                     </div>
                 </div>
 
-                @foreach ($assets as $asset)
+                @foreach ($alat as $asset)
                     <div class="modal fade" id="assetModal{{ $asset->id }}" tabindex="-1" role="dialog"
                         aria-labelledby="assetModalLabel{{ $asset->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -351,17 +351,17 @@
                 const searchForm = document.getElementById("search-form");
                 const searchInput = document.getElementById("search-input");
                 const searchResults = document.getElementById("search-results");
-                const assets = @json($assets); // Data aset
+                const alat = @json($alat); // Data aset
                 const stocks = @json($stocks); // Data stok
 
                 searchForm.addEventListener("submit", function(event) {
                     event.preventDefault(); // Mencegah form submit
 
                     const searchTerm = searchInput.value.trim().toLowerCase();
-                    const filteredAssets = assets.filter(asset => asset.name.toLowerCase().includes(
+                    const filteredalat = alat.filter(asset => asset.name.toLowerCase().includes(
                         searchTerm));
 
-                    displaySearchResults(filteredAssets);
+                    displaySearchResults(filteredalat);
                 });
 
                 function displaySearchResults(results) {

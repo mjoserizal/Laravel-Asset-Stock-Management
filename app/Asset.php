@@ -15,6 +15,7 @@ class Asset extends Model
         'name',
         'id_jenis_obat',
         'image_path',
+        'suhu',
         'expired_at',
         'created_at',
         'updated_at',

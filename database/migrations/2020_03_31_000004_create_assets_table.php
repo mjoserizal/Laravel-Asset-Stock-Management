@@ -12,6 +12,7 @@ class CreateAssetsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('image_path')->nullable();
+            $table->float('suhu')->nullable();
             $table->timestamp('expired_at')->nullable();
             $table->longText('description')->nullable();
             $table->timestamps();

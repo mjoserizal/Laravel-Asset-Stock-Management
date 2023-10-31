@@ -50,10 +50,13 @@
                             $expirationDate = \Carbon\Carbon::parse($disposable->expired_at);
                             $now = \Carbon\Carbon::now();
                             $sixMonthsLater = $now->copy()->addMonths(6);
-                            $isExpiredInSixMonths = $expirationDate->lessThanOrEqualTo($sixMonthsLater);
+                            $isExpired = $expirationDate->isSameDay($now);
+                            $isApproachingExpiration = $expirationDate->isBetween($now, $sixMonthsLater);
                         @endphp
                         <tr data-entry-id="{{ $disposable->id }}"
-                            @if($isExpiredInSixMonths) class="table-danger" @endif>
+                            @if ($isExpired) class="table-danger"
+                            @elseif ($isApproachingExpiration) class="table-warning"
+                            @endif>
                             <td>
 
                             </td>
