@@ -53,7 +53,7 @@
                     <div class="col-lg-7 mx-auto order-lg-2 align-self-center">
                         <div class="site-block-cover-content text-center">
                             <h2 class="sub-title">Effective Medicine, New Medicine Everyday</h2>
-                            <h1>Welcome To Pharma</h1>
+                            <h1>Welcome To Adaro</h1>
                         </div>
                     </div>
                 </div>
@@ -101,106 +101,196 @@
             </div>
         </div>
 
-        <div class="site-section">
-            <div class="container">
-                <div class="row">
-                    <div class="title-section text-center col-12">
-                        <h2 class="text-uppercase">Daftar Obat</h2>
+        <div class="container">
+            <div class="title-section text-center col-12">
+                <h2 class="text-uppercase">Daftar Obat</h2>
+            </div>
+            <form action="#" method="post" id="search-form" class="mb-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="search-input" placeholder="Cari obat...">
+                </div>
+            </form>
+        </div>
+
+        <div class="container">
+            <div class="search-wrap mb-4">
+                <form action="#" method="post" id="search-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="search-input" placeholder="Cari obat...">
                     </div>
-                    <form action="#" method="post" id="search-form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="search-input" placeholder="Cari obat...">
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
+        </div>
 
-            <div class="container">
-                <div class="search-wrap">
-                    <form action="#" method="post" id="search-form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="search-input" placeholder="Cari obat...">
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="container">
+            <div id="search-results" class="row"></div>
+            <br>
+        </div>
 
-            <div class="container">
-                <div id="search-results" class="row"></div>
-                <br>
-
-            </div>
-
-            <div class="container">
-                <div class="row">
-                    @foreach ($assets as $asset)
-                        @php
-                            $stock = $stocks->where('asset_id', $asset->id)->first();
-                        @endphp
-                        <div class="col-sm-6 col-lg-4 mb-4">
-                            <div class="card">
-                                @if ($asset->image_path)
-                                    <img src="{{ asset($asset->image_path) }}" alt="Image" class="card-img-top">
-                                @else
-                                    <img src="{{ asset('images/adaro.png') }}" alt="Image" class="card-img-top">
-                                @endif
-                                <div class="card-body text-center">
-                                    <h3 class="card-title">{{ $asset->name ?? '' }}</h3>
-                                    <p class="price">
-                                        @if ($stock)
-                                            Stok Tersedia: {{ $stock->current_stock }}
-                                        @else
-                                            Stok Tidak Tersedia
-                                        @endif
-                                    </p>
-                                </div>
+        <div class="container">
+            <div class="row">
+                @foreach ($assets as $asset)
+                    @php
+                        $stock = $stocks->where('asset_id', $asset->id)->first();
+                    @endphp
+                    <div class="col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                            @if ($asset->image_path)
+                                <img src="{{ asset($asset->image_path) }}" alt="Image" class="card-img-top">
+                            @else
+                                <img src="{{ asset('images/adaro.png') }}" alt="Image" class="card-img-top">
+                            @endif
+                            <div class="card-body text-center">
+                                <h3 class="card-title">{{ $asset->name ?? 'Nama Obat' }}</h3>
+                                <p class="price">
+                                    @if ($stock)
+                                        Stok Tersedia: {{ $stock->current_stock }}
+                                    @else
+                                        Stok Tidak Tersedia
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary btn-block" data-toggle="modal"
+                                    data-target="#assetModal{{ $asset->id }}">
+                                    Detail
+                                </button>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="row align-center">
+                <div class="col-12 text-center">
+                    <ul class="pagination justify-content-center">
+                        @if ($assets->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-hidden="true">&laquo;</span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $assets->previousPageUrl() }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @for ($i = 1; $i <= $assets->lastPage(); $i++)
+                            <li class="page-item {{ $i === $assets->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $assets->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+
+                        @if ($assets->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $assets->nextPageUrl() }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-hidden="true">&raquo;</span>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
             </div>
+
+            @foreach ($assets as $asset)
+                <div class="modal fade" id="assetModal{{ $asset->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="assetModalLabel{{ $asset->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-black" id="assetModalLabel{{ $asset->id }}">
+                                    {{ $asset->name ?? 'Detail Aset' }}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            @if ($asset->image_path)
+                                                <img src="{{ asset($asset->image_path) }}" alt="Image"
+                                                    class="img-fluid rounded">
+                                            @else
+                                                <img src="{{ asset('images/adaro.png') }}" alt="Image"
+                                                    class="img-fluid rounded">
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3 class="mb-3 text-dark">{{ $asset->name ?? 'Nama Obat' }}</h3>
+                                        <p class="description text-dark">{{ $asset->description ?? 'Deskripsi' }}</p>
+                                        <p class="price">
+                                            @if ($stock)
+                                                Stok Tersedia: {{ $stock->current_stock }}
+                                            @else
+                                                Stok Tidak Tersedia
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
 
 
             <style>
-                /* Atur tinggi dan lebar elemen 'item' sesuai kebutuhan Anda */
-                .item {
-                    height: 300px;
-                    /* Sesuaikan dengan tinggi yang Anda inginkan */
-                    width: 250px;
-                    /* Sesuaikan dengan lebar yang Anda inginkan */
-                }
 
                 /* CSS untuk card */
                 .card {
-                    margin-bottom: 20px;
-                    align-items: center;
+                    width: 250px;
                     border: 1px solid #ddd;
                     border-radius: 5px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                     background-color: #fff;
+                    text-align: center;
+                    margin: 20px;
+                    padding: 10px;
                 }
 
                 .card img {
-                    max-width: 80%;
-                    height: 300px;
+                    width: 100%;
+                    /* Mengatur lebar gambar menjadi 100% dari kotak gambar */
+                    max-height: 200px;
+                    /* Mengatur tinggi maksimum gambar (sesuaikan sesuai kebutuhan) */
                 }
 
                 .card-title {
                     font-size: 1.25rem;
                     font-weight: bold;
-                    margin-top: 10px;
+                    margin: 10px 0;
                     color: black;
                 }
 
                 .card-text {
                     font-size: 1rem;
-                    color: #000000;
+                    color: #333;
                 }
 
                 .price {
                     font-size: 1.25rem;
                     font-weight: bold;
-                    margin-top: 10px;
+                    margin: 10px 0;
+                }
+
+                .card-footer {
+                    padding: 10px;
+                }
+
+                /* Gaya tombol "Detail" */
+                .btn-primary {
+                    width: 100%;
                 }
             </style>
 
