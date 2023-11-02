@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daftar Aset</title>
+    <style>
+        /* Gaya CSS khusus untuk PDF */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Daftar Aset</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Expired</th>
+                <th>Deskripsi</th>
+                <th>Jenis Obat</th>
+                <th>Barcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($transactions as $transactions)
+            <tr>
+                <td>{{ $transactions->created_at }}</td>
+                <td>{{ $transactions->asset_id->name }}</td>
+                <td>{{ $transactions->user_id->name }}</td>
+                <td>{{ $transactions->stock }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</body>
+
+</html>

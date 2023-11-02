@@ -12,6 +12,7 @@ Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPag
 Route::get('/alat', [LandingPageController::class, 'landingPageAlat'])->name('landingPageAlat');
 Route::get('/disposable', [LandingPageController::class, 'landingPageDisposable'])->name('landingPageDisposable');
 Route::get('/exportPDF', [ExportController::class, 'exportPdf'])->name('exportPdf');
+Route::get('/exportTransaksiPDF', [ExportController::class, 'exportLaporanTransaksi'])->name('exportLaporanTransaksi');
 
 Route::view('/register', 'register')->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');

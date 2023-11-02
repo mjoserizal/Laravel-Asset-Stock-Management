@@ -1,5 +1,12 @@
-@extends('layouts.admin')
-@section('content')
+@extends("layouts.admin")
+@section("content")
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route("exportLaporanTransaksi") }}">
+                Export PDF
+            </a>
+        </div>
+    </div>
     <div class="card">
         <div class="card-header">
             Transaksi
@@ -9,71 +16,72 @@
             <div class="table-responsive">
                 <table class=" table table-bordered table-striped table-hover datatable datatable-Transaction">
                     <thead>
-                    <tr>
-                        <th>
-                            Waktu
-                        </th>
-                        <th>
-                            Nama Obat
-                        </th>
-                        <th>
-                            {{ trans('cruds.transaction.fields.user') }}
-                        </th>
-                        <th>
-                            Stok
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                    </tr>
+                        <tr>
+                            <th>
+                                Waktu
+                            </th>
+                            <th>
+                                Nama Obat
+                            </th>
+                            <th>
+                                {{ trans("cruds.transaction.fields.user") }}
+                            </th>
+                            <th>
+                                Stok
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach($transactions as $key => $transaction)
-                        <tr data-entry-id="{{ $transaction->id }}">
-                            <td>
-                                {{ $transaction->created_at}}
-                            </td>
-                            <td>
-                                {{ $transaction->asset->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $transaction->user->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $transaction->stock ?? '' }}
-                            </td>
-                            <td>
-                                @if ($transaction['is_transaction'] == 1)
-                                    <a class="btn btn-xs btn-success"
-                                       href="{{ route('admin.transactions.statusTransaction', $transaction->id) }}">
-                                        Confirmed
-                                    </a>
-                                @else
-                                    <a class="btn btn-xs btn-warning"
-                                       href="{{ route('admin.transactions.statusTransaction', $transaction->id) }}">
-                                        Not Confirmed
-                                    </a>
-                                @endif
+                        @foreach ($transactions as $key => $transaction)
+                            <tr data-entry-id="{{ $transaction->id }}">
+                                <td>
+                                    {{ $transaction->created_at }}
+                                </td>
+                                <td>
+                                    {{ $transaction->asset->name ?? "" }}
+                                </td>
+                                <td>
+                                    {{ $transaction->user->name ?? "" }}
+                                </td>
+                                <td>
+                                    {{ $transaction->stock ?? "" }}
+                                </td>
+                                <td>
+                                    @if ($transaction["is_transaction"] == 1)
+                                        <a class="btn btn-xs btn-success"
+                                            href="{{ route("admin.transactions.statusTransaction", $transaction->id) }}">
+                                            Confirmed
+                                        </a>
+                                    @else
+                                        <a class="btn btn-xs btn-warning"
+                                            href="{{ route("admin.transactions.statusTransaction", $transaction->id) }}">
+                                            Not Confirmed
+                                        </a>
+                                    @endif
 
-                            </td>
+                                </td>
 
-                        </tr>
-                    @endforeach
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
 @endsection
-@section('scripts')
+@section("scripts")
     @parent
     <script>
-        $(function () {
+        $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
             $.extend(true, $.fn.dataTable.defaults, {
-                order: [[0, 'desc']],
+                order: [
+                    [0, 'desc']
+                ],
                 pageLength: 100,
                 columnDefs: [{
                     orderable: true,
@@ -81,12 +89,13 @@
                     targets: 0
                 }]
             });
-            $('.datatable-Transaction:not(.ajaxTable)').DataTable({buttons: dtButtons})
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $('.datatable-Transaction:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();
             });
         })
-
     </script>
 @endsection

@@ -7,6 +7,7 @@ use App\Asset;
 use Barryvdh\DomPDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Transaction;
 
 class ExportController extends Controller
 {
@@ -27,5 +28,14 @@ class ExportController extends Controller
         $pdf->loadView('assets_pdf', compact('assets'));
 
         return $pdf->download('laporan.pdf');
+    }
+    public function exportLaporanTransaksi()
+    {
+        $transactions = Transaction::all();
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->loadView('laporan_pdf', compact('transactions'));
+
+        return $pdf->download('laporanTransaksi.pdf');
     }
 }
